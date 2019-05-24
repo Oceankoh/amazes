@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:a_maze_ment/Home.dart';
+import 'package:a_maze_ment/PreApp/Home.dart';
 
 import 'dart:async';
 
