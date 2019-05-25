@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -10,11 +8,10 @@ class HomePage extends StatefulWidget{
   }
 }
 
-class HomePageState extends State<HomePage>{
+class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return null;
   }
-
 }
