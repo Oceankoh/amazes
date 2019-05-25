@@ -3,15 +3,6 @@ import 'package:a_maze_ment/PreApp/Home.dart';
 
 import 'dart:async';
 
-void main() => runApp(BaseApp());
-
-class BaseApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: Splash());
-  }
-}
-
 class Splash extends StatefulWidget {
   @override
   State createState() => new SplashState();
