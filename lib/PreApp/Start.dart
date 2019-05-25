@@ -6,6 +6,15 @@ void main() => runApp(BaseApp());
 class BaseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Splash());
+    return MaterialApp(
+        theme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: Colors.white,
+            accentColor: Colors.blueAccent,
+            textTheme: TextTheme(
+                headline: TextStyle(fontSize: 30),
+                title: TextStyle(fontSize: 20),
+                body1: TextStyle(fontSize: 10))),
+        home: Splash());
   }
 }
