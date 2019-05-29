@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/PreApp/Splash.dart';
+import 'dart:ui';
 
 void main() => runApp(BaseApp());
 
@@ -10,7 +11,7 @@ class BaseApp extends StatelessWidget {
         theme: ThemeData(
             brightness: Brightness.light,
             primaryColor: Colors.white,
-            accentColor: Colors.blueAccent,
+            accentColor: Color.fromRGBO(51,51,204,1),
             textTheme: TextTheme(
                 headline: TextStyle(fontSize: 30),
                 title: TextStyle(fontSize: 20),

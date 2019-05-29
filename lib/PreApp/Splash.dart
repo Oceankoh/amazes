@@ -31,12 +31,21 @@ class SplashState extends State<Splash> {
 class LoadAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Animator(
-        tween: Tween<double>(begin: 0, end: 2 * pi),
-        duration: Duration(seconds: 2),
-        repeats: 0,
-        curve: Curves.easeInOutQuart,
-        builder: (anim) => Transform.rotate(angle: anim.value, child: CircleLogo()));
+    return Container(
+        child: Stack(children: [
+      Center(
+          child: Animator(
+              tween: Tween<double>(begin: 0, end: 2 * pi),
+              duration: Duration(seconds: 2),
+              repeats: 0,
+              curve: Curves.easeInOutQuart,
+              builder: (anim) => Transform.rotate(angle: anim.value, child: CircleLogo()))),
+      Center(
+          child: Text(
+        'Loading...',
+        style: TextStyle(fontSize: 40, color: Theme.of(context).accentColor),
+      ))
+    ]));
   }
 }
 
