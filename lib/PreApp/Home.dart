@@ -11,7 +11,30 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return null;
+    return Container(
+      child: Column(
+        children: [
+
+        ],
+      ),
+    );
+  }
+}
+
+class NewButton extends StatelessWidget{
+  String text;
+  newButton(String txt){
+    text=txt;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(
+        children: [
+          Text('Play',style: TextStyle(color: Theme.of(context).primaryColor)),
+          
+        ],
+      ),
+    );
   }
 }
