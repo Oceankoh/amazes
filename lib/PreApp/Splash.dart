@@ -14,16 +14,16 @@ class SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    /*Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 3), () {
 			Navigator.pushReplacement(
 				context, new MaterialPageRoute(builder: (context) => HomePage()));
-		});*/
+		});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).canvasColor,
         body: Center(key: UniqueKey(), child: LoadAnimation()));
   }
 }
@@ -43,7 +43,7 @@ class LoadAnimation extends StatelessWidget {
       Center(
           child: Text(
         'Loading...',
-        style: TextStyle(fontSize: 40, color: Theme.of(context).accentColor),
+        style: TextStyle(fontSize: 40, color: Theme.of(context).primaryColor),
       ))
     ]));
   }
