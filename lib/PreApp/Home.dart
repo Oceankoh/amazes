@@ -1,40 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:a_maze_ment/PlayPath/MazeSpecs.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
-  }
+  State createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-
-        ],
-      ),
-    );
-  }
-}
-
-class NewButton extends StatelessWidget{
-  String text;
-  newButton(String txt){
-    text=txt;
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: [
-          Text('Play',style: TextStyle(color: Theme.of(context).primaryColor)),
-          
-        ],
-      ),
-    );
+    return Scaffold(
+        backgroundColor: Theme.of(context).canvasColor,
+        body: Container(
+            child: Center(
+                child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Padding(
+            child: MaterialButton(
+              height: 50,
+              minWidth: 200,
+              onPressed: () {
+                Navigator.push(context, new MaterialPageRoute(builder: (context) => Sizing()));
+              },
+              color: Theme.of(context).primaryColor,
+              padding: EdgeInsets.all(10),
+              shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(13)),
+              child: Text('PLAY', style: Theme.of(context).textTheme.button),
+            ),
+            padding: EdgeInsets.all(20),
+          ),
+          Padding(
+              child: MaterialButton(
+                height: 50,
+                minWidth: 200,
+                onPressed: () {},
+                color: Theme.of(context).primaryColor,
+                padding: EdgeInsets.all(10),
+                shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(13)),
+                child: Text('SETTINGS', style: Theme.of(context).textTheme.button),
+              ),
+              padding: EdgeInsets.all(20)),
+          Padding(
+              child: MaterialButton(
+                height: 50,
+                minWidth: 200,
+                onPressed: () {},
+                color: Theme.of(context).primaryColor,
+                padding: EdgeInsets.all(10),
+                shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(13)),
+                child: Text('LEADERBOARDS', style: Theme.of(context).textTheme.button),
+              ),
+              padding: EdgeInsets.all(20)),
+          Padding(
+              child: MaterialButton(
+                height: 50,
+                minWidth: 200,
+                onPressed: () {},
+                color: Theme.of(context).primaryColor,
+                padding: EdgeInsets.all(10),
+                shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(13)),
+                child: Text('ABOUT', style: Theme.of(context).textTheme.button),
+              ),
+              padding: EdgeInsets.all(20))
+        ]))));
   }
 }
