@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class GenerateButtonMaze extends StatefulWidget {
+class GenerateMaze extends StatefulWidget {
 	final int side;
-	GenerateButtonMaze({Key key, @required this.side}) : super(key: key);
+	GenerateMaze({Key key, @required this.side}) : super(key: key);
 	@override
 	State createState() => _MazeState(side);
 }
 
-class _MazeState extends State<GenerateButtonMaze> {
+class _MazeState extends State<GenerateMaze> {
 	int side;
 	_MazeState(int s){
 		side=s;
