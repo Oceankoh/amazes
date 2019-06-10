@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:a_maze_ment/PlayPath/ButtonMaze.dart';
-import 'package:a_maze_ment/PlayPath/SwipeMaze.dart';
+import 'package:a_maze_ment/PlayPath/Maze.dart';
 
 class Sizing extends StatelessWidget {
   @override
@@ -240,8 +239,6 @@ class Sizing extends StatelessWidget {
   int l, b;
   nextPage(int s, BuildContext context) {
     if (/*TODO implement check settings*/ s > 1)
-      Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateButtonMaze(side: s)));
-    else
-      Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateSwipeMaze(side: s)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateMaze(side: s)));
   }
 }
