@@ -12,7 +12,7 @@ class BaseApp extends StatelessWidget {
             brightness: Brightness.light,
             primaryColor: Colors.white,
             accentColor: Color.fromRGBO(51, 51, 204, 1),
-            canvasColor: Colors.black,
+            canvasColor: Color(0xff576574),
             textTheme: TextTheme(
                 headline: TextStyle(fontSize: 30),
                 title: TextStyle(fontSize: 20),

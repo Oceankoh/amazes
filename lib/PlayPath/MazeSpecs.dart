@@ -11,7 +11,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(5, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 5)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -25,7 +28,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(6, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 6)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -39,7 +45,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(7, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 7)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -53,7 +62,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(8, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 8)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -67,7 +79,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(9, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 9)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -81,7 +96,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(10, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 10)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -95,7 +113,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(11, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 11)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -109,7 +130,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(12, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 12)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -123,7 +147,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(13, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 13)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -137,7 +164,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(14, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 14)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -151,7 +181,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(15, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 15)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -165,7 +198,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(16, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 16)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -179,7 +215,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(17, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 17)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -193,7 +232,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(18, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 18)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -207,7 +249,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(19, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 19)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -221,7 +266,10 @@ class Sizing extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: nextPage(20, context),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GenerateMaze(side: 20)));
+                },
                 color: Theme.of(context).primaryColor,
                 height: 50,
                 minWidth: 300,
@@ -234,11 +282,5 @@ class Sizing extends StatelessWidget {
             ),
           ],
         ));
-  }
-
-  int l, b;
-  nextPage(int s, BuildContext context) {
-    if (/*TODO implement check settings*/ s > 1)
-      Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateMaze(side: s)));
   }
 }
