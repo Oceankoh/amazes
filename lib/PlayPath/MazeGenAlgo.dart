@@ -7,49 +7,47 @@ class MazeGen {
   List<List<Block>> maze = [];
   Queue<Coords> visited = new Queue<Coords>();
   int size;
-  List<List<Block>> generate(int size) {
+
+  List<List<Block>> generate(int s) {
     List<Block> init = [];
-    Block blk = Block();
-    this.size = size;
-    for (int i = 0; i < size; i++) init.add(blk);
+    this.size = s;
+    for (int i = 0; i < size; i++) init.add(Block());
     for (int i = 0; i < size; i++) maze.add(init);
-    var rndx = Random();
-    int x = rndx.nextInt(size);
-    int y = rndx.nextInt(size);
-    maze[x][y].visited = true;
-    visited.add(Coords(x, y));
-    algo(Coords(x, y));
+    var rnd = Random();
+    int xStart = rnd.nextInt(size);
+    int yStart = rnd.nextInt(size);
+    algo(Coords(xStart, yStart));
     return maze;
   }
 
   void algo(Coords coordinates) {
-    int x = coordinates.x;
-    int y = coordinates.y;
+    int x = coordinates.getX();
+    int y = coordinates.getY();
     bool unvisited = false;
     List<int> randomizer = [];
     if (y + 1 < size) {
-      if (!(maze[x][y + 1].visited)) {
+      if (!(maze[x][y + 1].getvisited())) {
         //up node
         unvisited = true;
         randomizer.add(1);
       }
     }
     if (x + 1 < size) {
-      if (!(maze[x + 1][y].visited)) {
+      if (!(maze[x + 1][y].getvisited())) {
         //right node
         unvisited = true;
         randomizer.add(2);
       }
     }
     if (y - 1 >= 0) {
-      if (!(maze[x][y - 1].visited)) {
+      if (!(maze[x][y - 1].getvisited())) {
         //down node
         unvisited = true;
         randomizer.add(3);
       }
     }
     if (x - 1 >= 0) {
-      if (!(maze[x - 1][y].visited)) {
+      if (!(maze[x - 1][y].getvisited())) {
         //left node
         unvisited = true;
         randomizer.add(4);
