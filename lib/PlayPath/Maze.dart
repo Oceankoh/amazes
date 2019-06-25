@@ -47,10 +47,10 @@ class _MazeState extends State<GenerateMaze> {
         left = Colors.transparent,
         right = Colors.transparent;
 
-    if (maze[x][y].up) up = Colors.white;
-    if (maze[x][y].right) right = Colors.white;
-    if (maze[x][y].down) down = Colors.white;
-    if (maze[x][y].left) left = Colors.white;
+    if (maze[x][y].getup()) up = Colors.white;
+    if (maze[x][y].getright()) right = Colors.white;
+    if (maze[x][y].getdown()) down = Colors.white;
+    if (maze[x][y].getleft()) left = Colors.white;
 
     return Container(
         decoration: BoxDecoration(
