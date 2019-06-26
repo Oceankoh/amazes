@@ -17,19 +17,43 @@ class _MazeState extends State<GenerateMaze> {
     side = s;
     maze = generator.generate(side);
   }
+  Coords current=Coords(0, 0);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Theme.of(context).canvasColor,
-        body: Container(
-          padding: EdgeInsets.all(5),
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: side),
-            itemBuilder: drawMaze,
-            itemCount: side * side,
-          ),
-        ));
+    return GestureDetector(
+        onPanUpdate: move,
+        child: Scaffold(
+            backgroundColor: Theme.of(context).canvasColor,
+            body: Container(
+              padding: EdgeInsets.all(5),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: side),
+                itemBuilder: drawMaze,
+                itemCount: side * side,
+              ),
+            )));
+  }
+
+  move(DragUpdateDetails details) {
+    if (details.delta.dx > 0) {//move right(+x)
+      if(!maze[current.getX()][current.getY()].getRight()){
+        //move
+      }
+    } else {//move left(-x)
+      if(!maze[current.getX()][current.getY()].getLeft()){
+        //move
+      }
+    }
+    if (details.delta.dy > 0) {//move up(+y)
+      if(!maze[current.getX()][current.getY()].getUp()){
+        //move
+      }
+    } else {//move down(-y)
+      if(!maze[current.getX()][current.getY()].getDown()){
+        //move
+      }
+    }
   }
 
   Widget drawMaze(BuildContext context, int index) {
@@ -37,7 +61,7 @@ class _MazeState extends State<GenerateMaze> {
     x = (index / side).floor();
     y = (index % side);
     return GridTile(
-      child: drawGridCell(y, side-1-x),
+      child: drawGridCell(y, side - 1 - x),
     );
   }
 
