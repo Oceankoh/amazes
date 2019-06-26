@@ -37,7 +37,7 @@ class _MazeState extends State<GenerateMaze> {
     x = (index / side).floor();
     y = (index % side);
     return GridTile(
-      child: drawGridCell(x, y),
+      child: drawGridCell(y, side-1-x),
     );
   }
 
@@ -47,10 +47,10 @@ class _MazeState extends State<GenerateMaze> {
         left = Colors.transparent,
         right = Colors.transparent;
 
-    if (maze[x][y].getup()) up = Colors.white;
-    if (maze[x][y].getright()) right = Colors.white;
-    if (maze[x][y].getdown()) down = Colors.white;
-    if (maze[x][y].getleft()) left = Colors.white;
+    if (maze[x][y].getUp()) up = Colors.white;
+    if (maze[x][y].getRight()) right = Colors.white;
+    if (maze[x][y].getDown()) down = Colors.white;
+    if (maze[x][y].getLeft()) left = Colors.white;
 
     return Container(
         decoration: BoxDecoration(
