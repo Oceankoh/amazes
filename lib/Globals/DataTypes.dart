@@ -1,58 +1,65 @@
 class Block {
-	bool _up = true;
-	bool _right = true;
-	bool _down = true;
-	bool _left = true;
-	bool _visited = false;
+  bool _up = true;
+  bool _right = true;
+  bool _down = true;
+  bool _left = true;
+  bool _icon = false;
+  bool _visited = false;
 
-	// ignore: unnecessary_getters_setters
-	bool getUp() => _up;
-	// ignore: unnecessary_getters_setters
-	set up(bool value) {
-		_up = value;
-	}
+  bool getUp() => _up;
 
-	// ignore: unnecessary_getters_setters
-	bool getRight() => _right;
-	// ignore: unnecessary_getters_setters
-	set right(bool value) {
-		_right = value;
-	}
+  set up(bool value) {
+    _up = value;
+  }
 
-	// ignore: unnecessary_getters_setters
-	bool getDown() => _down;
-	// ignore: unnecessary_getters_setters
-	set down(bool value) {
-		_down = value;
-	}
+  bool getRight() => _right;
 
-	// ignore: unnecessary_getters_setters
-	bool getLeft() => _left;
-	// ignore: unnecessary_getters_setters
-	set left(bool value) {
-		_left = value;
-	}
+  set right(bool value) {
+    _right = value;
+  }
 
-	// ignore: unnecessary_getters_setters
-	bool getVisited() => _visited;
-	// ignore: unnecessary_getters_setters
-	set visited(bool value) {
-		_visited = value;
-	}
+  bool getDown() => _down;
+
+  set down(bool value) {
+    _down = value;
+  }
+
+  bool getLeft() => _left;
+
+  set left(bool value) {
+    _left = value;
+  }
+
+  bool getIcon() => _icon;
+
+  set icon(bool value) {
+    _icon = value;
+  }
+
+  bool getVisited() => _visited;
+
+  set visited(bool value) {
+    _visited = value;
+  }
 }
 
 class Coords {
-	int _x;
-	int _y;
-	Coords(int x, int y) {
-		_x = x;
-		_y = y;
-	}
+  int _x;
+  int _y;
+  Coords(int x, int y) {
+    _x = x;
+    _y = y;
+  }
 
-	int getX() {
-		return _x;
-	}
-	int getY() {
-		return _y;
-	}
+  int getX() => _x;
+
+  int getY() => _y;
+
+  set x(int value) {
+    _x = value;
+  }
+
+  set y(int value) {
+    _y = value;
+  }
 }
