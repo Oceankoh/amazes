@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/PlayPath/MazeGenAlgo.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
+import 'package:a_maze_ment/Globals/device.dart' as dev;
 import 'dart:math';
+import 'dart:ui';
 
 class GenerateMaze extends StatefulWidget {
   final int side;
@@ -47,32 +49,56 @@ class _MazeState extends State<GenerateMaze> {
               scrollDirection: Axis.vertical,
               itemBuilder: drawMaze,
               itemCount: side * side)),
-      CustomMultiChildLayout(delegate: GamePad(), children: [
-        Container(
-          key: Key("upButton"),
-          child: MaterialButton(
-              height: 150, minWidth: 150, onPressed: () {}, color: Theme.of(context).primaryColor),
-          alignment: Alignment.topCenter,
-        ),
-        Container(
-          key: Key("rightButton"),
-          child: MaterialButton(
-              height: 150, minWidth: 150, onPressed: () {}, color: Theme.of(context).primaryColor),
-          alignment: Alignment.centerRight,
-        ),
-        Container(
-          key: Key("downButton"),
-          child: MaterialButton(
-              height: 150, minWidth: 150, onPressed: () {}, color: Theme.of(context).primaryColor),
-          alignment: Alignment.bottomCenter,
-        ),
-        Container(
-          key: Key("leftButton"),
-          child: MaterialButton(
-              height: 150, minWidth: 150, onPressed: () {}, color: Theme.of(context).primaryColor),
-          alignment: Alignment.centerLeft,
-        )
-      ])
+      Column(
+        children: [
+          Row(children: [
+            Container(
+                height: (dev.screenHeight - dev.screenWidth * 1.2) / 3, width: dev.screenWidth / 3),
+            Container(
+                key: Key("upButton"),
+                child: MaterialButton(
+                    height: (dev.screenHeight - dev.screenWidth * 1.2) / 3,
+                    minWidth: dev.screenWidth / 3,
+                    onPressed: () {},
+                    color: Colors.white),
+                alignment: Alignment.topCenter)
+          ]),
+          Row(children: [
+            Container(
+                key: Key("leftButton"),
+                child: MaterialButton(
+                    height: (dev.screenHeight - dev.screenWidth * 1.2) / 3,
+                    minWidth: dev.screenWidth / 3,
+                    onPressed: () {},
+                    color: Colors.black),
+                alignment: Alignment.centerLeft),
+            Container(
+                height: (dev.screenHeight - dev.screenWidth * 1.2) / 3, width: dev.screenWidth / 3),
+            Container(
+                key: Key("rightButton"),
+                child: MaterialButton(
+                    height: (dev.screenHeight - dev.screenWidth * 1.2) / 3,
+                    minWidth: dev.screenWidth / 3,
+                    onPressed: () {},
+                    color: Colors.brown),
+                alignment: Alignment.centerRight)
+          ]),
+          Row(children: [
+            Container(
+                height: (dev.screenHeight - dev.screenWidth * 1.2) / 3, width: dev.screenWidth / 3),
+            Container(
+                key: Key("downButton"),
+                child: MaterialButton(
+                    height: (dev.screenHeight - dev.screenWidth * 1.2) / 3,
+                    minWidth: dev.screenWidth / 3,
+                    onPressed: () {},
+                    color: Colors.amber),
+                alignment: Alignment.bottomCenter)
+          ]),
+          Row(children: [Container(width: dev.screenWidth * 0.1, height: dev.screenWidth * 0.1)])
+        ],
+        mainAxisAlignment: MainAxisAlignment.end,
+      )
     ]));
   }
 
