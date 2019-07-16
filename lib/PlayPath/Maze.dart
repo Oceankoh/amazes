@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/PlayPath/MazeGenAlgo.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
+import 'package:a_maze_ment/PreApp/Home.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
-import 'dart:math';
 import 'dart:ui';
 
 class GenerateMaze extends StatefulWidget {
@@ -28,78 +28,105 @@ class GamePad extends MultiChildLayoutDelegate {
 class _MazeState extends State<GenerateMaze> {
   int side;
   List<List<Block>> maze;
+  Coords current;
   MazeGen generator = MazeGen();
   _MazeState(int s) {
     side = s;
     maze = generator.generate(side);
-    maze[0][0].icon = true;
+    maze[0][side - 1].icon = true;
+    current = Coords(0, side - 1);
   }
-
-  Coords current = Coords(0, 0);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(children: [
-      Container(
-          decoration: BoxDecoration(color: Theme.of(context).canvasColor),
-          padding: EdgeInsets.all(5),
-          child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: side),
-              scrollDirection: Axis.vertical,
-              itemBuilder: drawMaze,
-              itemCount: side * side)),
-      Column(
-        children: [
-          Row(children: [
-            Container(
-                height: (dev.screenHeight - dev.screenWidth * 1.2) / 3, width: dev.screenWidth / 3),
-            Container(
-                key: Key("upButton"),
-                child: MaterialButton(
-                    height: (dev.screenHeight - dev.screenWidth * 1.2) / 3,
-                    minWidth: dev.screenWidth / 3,
-                    onPressed: () {},
-                    color: Colors.white),
-                alignment: Alignment.topCenter)
-          ]),
-          Row(children: [
-            Container(
-                key: Key("leftButton"),
-                child: MaterialButton(
-                    height: (dev.screenHeight - dev.screenWidth * 1.2) / 3,
-                    minWidth: dev.screenWidth / 3,
-                    onPressed: () {},
-                    color: Colors.black),
-                alignment: Alignment.centerLeft),
-            Container(
-                height: (dev.screenHeight - dev.screenWidth * 1.2) / 3, width: dev.screenWidth / 3),
-            Container(
-                key: Key("rightButton"),
-                child: MaterialButton(
-                    height: (dev.screenHeight - dev.screenWidth * 1.2) / 3,
-                    minWidth: dev.screenWidth / 3,
-                    onPressed: () {},
-                    color: Colors.brown),
-                alignment: Alignment.centerRight)
-          ]),
-          Row(children: [
-            Container(
-                height: (dev.screenHeight - dev.screenWidth * 1.2) / 3, width: dev.screenWidth / 3),
-            Container(
-                key: Key("downButton"),
-                child: MaterialButton(
-                    height: (dev.screenHeight - dev.screenWidth * 1.2) / 3,
-                    minWidth: dev.screenWidth / 3,
-                    onPressed: () {},
-                    color: Colors.amber),
-                alignment: Alignment.bottomCenter)
-          ]),
-          Row(children: [Container(width: dev.screenWidth * 0.1, height: dev.screenWidth * 0.1)])
-        ],
-        mainAxisAlignment: MainAxisAlignment.end,
-      )
-    ]));
+    if (maze[maze.length - 1][0].getIcon()) {
+      return Scaffold(
+          body: Column(children: [
+        Center(
+            child: Text("You Win!!!",
+                style: Theme.of(context).textTheme.headline, textAlign: TextAlign.center)),
+        Padding(
+            child: MaterialButton(
+                height: 50,
+                minWidth: 200,
+                onPressed: () {
+                  Navigator.push(context, new MaterialPageRoute(builder: (context) => HomePage()));
+                },
+                color: Theme.of(context).primaryColor,
+                padding: EdgeInsets.all(10),
+                shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(13)),
+                child: Text('Return To Home', style: Theme.of(context).textTheme.button)),
+            padding: EdgeInsets.all(20))
+      ], mainAxisAlignment: MainAxisAlignment.center));
+    } else {
+      return Scaffold(
+          body: Stack(children: [
+        Container(
+            decoration: BoxDecoration(color: Theme.of(context).canvasColor),
+            padding: EdgeInsets.all(5),
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: side),
+                scrollDirection: Axis.vertical,
+                itemBuilder: drawMaze,
+                itemCount: side * side)),
+        Column(
+          children: [
+            Row(children: [
+              Container(
+                  key: Key("leftButton"),
+                  child: MaterialButton(
+                      height: (dev.screenHeight - dev.screenWidth * 1.2),
+                      minWidth: dev.screenWidth * 0.3,
+                      onPressed: () {
+                        move(4);
+                      },
+                      child: Icon(Icons.keyboard_arrow_left,
+                          size: dev.screenHeight * 0.1, color: Colors.white)),
+                  alignment: Alignment.centerLeft),
+              Column(
+                children: [
+                  Container(
+                      key: Key("upButton"),
+                      child: MaterialButton(
+                          height: (dev.screenHeight - dev.screenWidth * 1.2) / 2,
+                          minWidth: dev.screenWidth * 0.4,
+                          onPressed: () {
+                            move(1);
+                          },
+                          child: Icon(Icons.keyboard_arrow_up,
+                              size: dev.screenHeight * 0.1, color: Colors.white)),
+                      alignment: Alignment.topCenter),
+                  Container(
+                      key: Key("downButton"),
+                      child: MaterialButton(
+                          height: (dev.screenHeight - dev.screenWidth * 1.2) / 2,
+                          minWidth: dev.screenWidth * 0.4,
+                          onPressed: () {
+                            move(3);
+                          },
+                          child: Icon(Icons.keyboard_arrow_down,
+                              size: dev.screenHeight * 0.1, color: Colors.white)),
+                      alignment: Alignment.bottomCenter)
+                ],
+              ),
+              Container(
+                  key: Key("rightButton"),
+                  child: MaterialButton(
+                      height: (dev.screenHeight - dev.screenWidth * 1.2),
+                      minWidth: dev.screenWidth * 0.3,
+                      onPressed: () {
+                        move(2);
+                      },
+                      child: Icon(Icons.keyboard_arrow_right,
+                          size: dev.screenHeight * 0.1, color: Colors.white)),
+                  alignment: Alignment.centerRight)
+            ]),
+            Row(children: [Container(width: dev.screenWidth * 0.1, height: dev.screenWidth * 0.1)])
+          ],
+          mainAxisAlignment: MainAxisAlignment.end,
+        )
+      ]));
+    }
   }
 
   move(int direction) {
@@ -156,23 +183,41 @@ class _MazeState extends State<GenerateMaze> {
         down = Colors.transparent,
         left = Colors.transparent,
         right = Colors.transparent;
-
+    Container ret;
     if (maze[x][y].getUp()) up = Colors.white;
     if (maze[x][y].getRight()) right = Colors.white;
     if (maze[x][y].getDown()) down = Colors.white;
     if (maze[x][y].getLeft()) left = Colors.white;
 
     if (maze[x][y].getIcon()) {
-      return Container(
+      ret = Container(
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.red,
+              border: Border(
+                  top: BorderSide(width: 2, color: up),
+                  right: BorderSide(width: 2, color: right),
+                  bottom: BorderSide(width: 2, color: down),
+                  left: BorderSide(width: 2, color: left))));
+    } else if (x == 0 && y == maze.length - 1) {
+      ret = Container(
+          child: Icon(Icons.play_arrow, color: Colors.white, size: dev.screenWidth / (2 * side)),
+          decoration: BoxDecoration(
+              border: Border(
+                  top: BorderSide(width: 2, color: up),
+                  right: BorderSide(width: 2, color: right),
+                  bottom: BorderSide(width: 2, color: down),
+                  left: BorderSide(width: 2, color: left))));
+    } else if (x == maze.length - 1 && y == 0) {
+      ret = Container(
+          child: Icon(Icons.exit_to_app, color: Colors.white, size: dev.screenWidth / (2 * side)),
+          decoration: BoxDecoration(
               border: Border(
                   top: BorderSide(width: 2, color: up),
                   right: BorderSide(width: 2, color: right),
                   bottom: BorderSide(width: 2, color: down),
                   left: BorderSide(width: 2, color: left))));
     } else {
-      return Container(
+      ret = Container(
           decoration: BoxDecoration(
               border: Border(
                   top: BorderSide(width: 2, color: up),
@@ -180,5 +225,7 @@ class _MazeState extends State<GenerateMaze> {
                   bottom: BorderSide(width: 2, color: down),
                   left: BorderSide(width: 2, color: left))));
     }
+
+    return ret;
   }
 }
