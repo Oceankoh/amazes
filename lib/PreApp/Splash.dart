@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/PreApp/Home.dart';
+import 'package:a_maze_ment/Globals/device.dart' as dev;
 import 'package:animator/animator.dart';
 import 'dart:math';
 import 'dart:ui';
@@ -31,6 +32,8 @@ class SplashState extends State<Splash> {
 class LoadAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    dev.screenHeight=MediaQuery.of(context).size.height;
+    dev.screenWidth=MediaQuery.of(context).size.width;
     return Container(
         child: Stack(children: [
       Center(
