@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/PreApp/Home.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
+import 'package:flutter/services.dart';
 import 'package:animator/animator.dart';
 import 'dart:math';
 import 'dart:ui';
@@ -11,9 +12,12 @@ class Splash extends StatefulWidget {
   State createState() => new SplashState();
 }
 
-class SplashState extends State<Splash> {
+class SplashState extends State<Splash>{
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
 			Navigator.pushReplacement(
@@ -26,6 +30,17 @@ class SplashState extends State<Splash> {
     return Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         body: Center(key: UniqueKey(), child: LoadAnimation()));
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
   }
 }
 
