@@ -42,19 +42,12 @@ class LoadAnimation extends StatelessWidget {
               duration: Duration(seconds: 2),
               repeats: 0,
               curve: Curves.easeInOutQuart,
-              builder: (anim) => Transform.rotate(angle: anim.value, child: CircleLogo()))),
+              builder: (anim) => Transform.rotate(angle: anim.value, child: Image.asset('assets/MazeCircle.png')))),
       Center(
           child: Text(
         'Loading...',
         style: TextStyle(fontSize: 40, color: Theme.of(context).primaryColor),
       ))
     ]));
-  }
-}
-
-class CircleLogo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Image.asset('assets/MazeCircle.png');
   }
 }
