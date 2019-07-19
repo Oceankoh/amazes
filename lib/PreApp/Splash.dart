@@ -12,7 +12,7 @@ class Splash extends StatefulWidget {
   State createState() => new SplashState();
 }
 
-class SplashState extends State<Splash>{
+class SplashState extends State<Splash> {
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([
@@ -20,9 +20,8 @@ class SplashState extends State<Splash>{
     ]);
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
-			Navigator.pushReplacement(
-				context, new MaterialPageRoute(builder: (context) => HomePage()));
-		});
+      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => HomePage()));
+    });
   }
 
   @override
@@ -47,22 +46,31 @@ class SplashState extends State<Splash>{
 class LoadAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    dev.screenHeight=MediaQuery.of(context).size.height;
-    dev.screenWidth=MediaQuery.of(context).size.width;
+    dev.screenHeight = MediaQuery.of(context).size.height;
+    dev.screenWidth = MediaQuery.of(context).size.width;
     return Container(
-        child: Stack(children: [
-      Center(
+        child: Center(
+            child: Column(children: [
+      Container(
           child: Animator(
               tween: Tween<double>(begin: 0, end: 2 * pi),
               duration: Duration(seconds: 2),
               repeats: 0,
               curve: Curves.easeInOutQuart,
-              builder: (anim) => Transform.rotate(angle: anim.value, child: Image.asset('assets/MazeCircle.png')))),
-      Center(
-          child: Text(
-        'Loading...',
+              builder: (anim) => Transform.rotate(
+                  angle: anim.value,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: AssetImage('assets/MazeCircle.png')),
+                      shape: BoxShape.circle,
+                    ),
+                    width: dev.screenWidth * 0.2,
+                    height: dev.screenHeight * 0.2,
+                  )))),
+      Text(
+        'LOADING',
         style: TextStyle(fontSize: 40, color: Theme.of(context).primaryColor),
-      ))
-    ]));
+      ),
+    ], mainAxisAlignment: MainAxisAlignment.center)));
   }
 }
