@@ -183,6 +183,14 @@ class _MazeState extends State<GenerateMaze> {
         down = Colors.transparent,
         left = Colors.transparent,
         right = Colors.transparent;
+
+    double T = 1, R = 1, B = 1, L = 1;
+
+    if(x==0) L=2;
+    if(x==maze.length-1) R=2;
+    if(y==0) B=2;
+    if(y==maze.length-1) T=2;
+
     Container ret;
     if (maze[x][y].getUp()) up = Colors.white;
     if (maze[x][y].getRight()) right = Colors.white;
@@ -194,37 +202,38 @@ class _MazeState extends State<GenerateMaze> {
           decoration: BoxDecoration(
               color: Colors.red,
               border: Border(
-                  top: BorderSide(width: 2, color: up),
-                  right: BorderSide(width: 2, color: right),
-                  bottom: BorderSide(width: 2, color: down),
-                  left: BorderSide(width: 2, color: left))));
+                  top: BorderSide(width: T, color: up),
+                  right: BorderSide(width: R, color: right),
+                  bottom: BorderSide(width: B, color: down),
+                  left: BorderSide(width: L, color: left))));
     } else if (x == 0 && y == maze.length - 1) {
       ret = Container(
           child: Icon(MdiIcons.arrowBottomRightBoldOutline,
               color: Colors.white, size: dev.screenWidth / (2 * side)),
           decoration: BoxDecoration(
               border: Border(
-                  top: BorderSide(width: 2, color: up),
-                  right: BorderSide(width: 2, color: right),
-                  bottom: BorderSide(width: 2, color: down),
-                  left: BorderSide(width: 2, color: left))));
+                  top: BorderSide(width: T, color: up),
+                  right: BorderSide(width: R, color: right),
+                  bottom: BorderSide(width: B, color: down),
+                  left: BorderSide(width: L, color: left))));
     } else if (x == maze.length - 1 && y == 0) {
       ret = Container(
-          child: Icon(MdiIcons.starCircleOutline, color: Colors.white, size: dev.screenWidth / (2 * side)),
+          child: Icon(MdiIcons.starCircleOutline,
+              color: Colors.white, size: dev.screenWidth / (2 * side)),
           decoration: BoxDecoration(
               border: Border(
-                  top: BorderSide(width: 2, color: up),
-                  right: BorderSide(width: 2, color: right),
-                  bottom: BorderSide(width: 2, color: down),
-                  left: BorderSide(width: 2, color: left))));
+                  top: BorderSide(width: T, color: up),
+                  right: BorderSide(width: R, color: right),
+                  bottom: BorderSide(width: B, color: down),
+                  left: BorderSide(width: L, color: left))));
     } else {
       ret = Container(
           decoration: BoxDecoration(
               border: Border(
-                  top: BorderSide(width: 2, color: up),
-                  right: BorderSide(width: 2, color: right),
-                  bottom: BorderSide(width: 2, color: down),
-                  left: BorderSide(width: 2, color: left))));
+                  top: BorderSide(width: T, color: up),
+                  right: BorderSide(width: R, color: right),
+                  bottom: BorderSide(width: B, color: down),
+                  left: BorderSide(width: L, color: left))));
     }
 
     return ret;
