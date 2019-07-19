@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:a_maze_ment/PlayPath/MazeGenAlgo.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
 import 'package:a_maze_ment/PreApp/Home.dart';
@@ -52,9 +53,8 @@ class _MazeState extends State<GenerateMaze> {
                 onPressed: () {
                   Navigator.push(context, new MaterialPageRoute(builder: (context) => HomePage()));
                 },
-                color: Theme.of(context).primaryColor,
                 padding: EdgeInsets.all(10),
-                shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(13)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                 child: Text('Return To Home', style: Theme.of(context).textTheme.button)),
             padding: EdgeInsets.all(20))
       ], mainAxisAlignment: MainAxisAlignment.center));
@@ -200,7 +200,8 @@ class _MazeState extends State<GenerateMaze> {
                   left: BorderSide(width: 2, color: left))));
     } else if (x == 0 && y == maze.length - 1) {
       ret = Container(
-          child: Icon(Icons.play_arrow, color: Colors.white, size: dev.screenWidth / (2 * side)),
+          child: Icon(MdiIcons.arrowBottomRightBoldOutline,
+              color: Colors.white, size: dev.screenWidth / (2 * side)),
           decoration: BoxDecoration(
               border: Border(
                   top: BorderSide(width: 2, color: up),
@@ -209,7 +210,7 @@ class _MazeState extends State<GenerateMaze> {
                   left: BorderSide(width: 2, color: left))));
     } else if (x == maze.length - 1 && y == 0) {
       ret = Container(
-          child: Icon(Icons.exit_to_app, color: Colors.white, size: dev.screenWidth / (2 * side)),
+          child: Icon(MdiIcons.starCircleOutline, color: Colors.white, size: dev.screenWidth / (2 * side)),
           decoration: BoxDecoration(
               border: Border(
                   top: BorderSide(width: 2, color: up),
