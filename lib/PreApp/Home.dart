@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/PlayPath/MazeSpecs.dart';
 import 'package:a_maze_ment/AboutPath/About.dart';
+import 'package:a_maze_ment/SettingPath/Settings.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
 import 'package:animator/animator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -40,7 +41,9 @@ class HomePageState extends State<HomePage> {
             Padding(
                 child: MaterialButton(
                   minWidth: dev.screenWidth * 0.5,
-                  onPressed: () {},
+                  onPressed: () {
+                      Navigator.push(context, new MaterialPageRoute(builder: (context) => Settings()));
+                  },
                   padding: EdgeInsets.all(10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
                   child: Row(children: [

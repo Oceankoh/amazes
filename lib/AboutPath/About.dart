@@ -19,7 +19,7 @@ class About extends StatelessWidget {
                 'Body',
                 style: Theme.of(context).textTheme.body1,
               )),
-          Padding(
+          Center(
               child: MaterialButton(
                   height: 50,
                   minWidth: 200,
@@ -27,10 +27,9 @@ class About extends StatelessWidget {
                     Navigator.push(
                         context, new MaterialPageRoute(builder: (context) => HomePage()));
                   },
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(dev.screenWidth*0.01),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  child: Text('Return To Home', style: Theme.of(context).textTheme.button)),
-              padding: EdgeInsets.all(20))
+                  child: Text('Return To Home', style: Theme.of(context).textTheme.button)))
         ],
       ),
     );
