@@ -48,6 +48,8 @@ class LoadAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     dev.screenHeight = MediaQuery.of(context).size.height;
     dev.screenWidth = MediaQuery.of(context).size.width;
+    dev.gameVolume = 0;
+    dev.bgVolume = 0;
     return Container(
         child: Center(
             child: Column(children: [
