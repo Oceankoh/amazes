@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:a_maze_ment/PlayPath/MazeGenAlgo.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
 import 'package:a_maze_ment/PreApp/Home.dart';
@@ -13,18 +15,10 @@ class GenerateMaze extends StatefulWidget {
   State createState() => _MazeState(side);
 }
 
-class GamePad extends MultiChildLayoutDelegate {
-  @override
-  void performLayout(Size size) {
-    // TODO: implement performLayout
-  }
-
-  @override
-  bool shouldRelayout(MultiChildLayoutDelegate oldDelegate) {
-    // TODO: implement shouldRelayout
-    return null;
-  }
-}
+AudioCache player = AudioCache();
+Future<AudioPlayer> control;
+const moveSound = 'Ding.mp3';
+const celebSound= 'DallaDalla.mp3';
 
 class _MazeState extends State<GenerateMaze> {
   int side;
@@ -41,6 +35,7 @@ class _MazeState extends State<GenerateMaze> {
   @override
   Widget build(BuildContext context) {
     if (maze[maze.length - 1][0].getIcon()) {
+      control=player.play(celebSound, volume: dev.bgVolume);
       return Scaffold(
           body: Column(children: [
         Center(
@@ -51,7 +46,10 @@ class _MazeState extends State<GenerateMaze> {
                 height: 50,
                 minWidth: 200,
                 onPressed: () {
-                  Navigator.push(context, new MaterialPageRoute(builder: (context) => HomePage()));
+                  control.then((controller){
+                    controller.stop();
+                  });
+                  Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => HomePage()));
                 },
                 padding: EdgeInsets.all(10),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
@@ -129,7 +127,8 @@ class _MazeState extends State<GenerateMaze> {
     }
   }
 
-  move(int direction) {
+  move(int direction) async {
+    await player.play(moveSound,volume: dev.gameVolume);
     switch (direction) {
       case 1:
         //move up(+y)

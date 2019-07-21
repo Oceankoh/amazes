@@ -7,9 +7,11 @@ class Settings extends StatefulWidget {
 }
 
 class SettingsPage extends State<Settings> {
-  int bgAudio = 100, gameAudio = 100;
+  double bgAudio = dev.bgVolume * 100, gameAudio = dev.gameVolume * 100;
   @override
   Widget build(BuildContext context) {
+    int bgLabel = bgAudio.round();
+    int gameLabel = gameAudio.round();
     return Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         body: Column(children: [
@@ -19,11 +21,12 @@ class SettingsPage extends State<Settings> {
           )),
           Container(
             child: Slider(
-              value: bgAudio.toDouble(),
-              label: '$bgAudio',
+              value: bgAudio,
+              label: '$bgLabel',
               onChanged: (double value) {
                 setState(() {
-                  bgAudio = value.round();
+                  bgAudio = value;
+                  dev.bgVolume = bgAudio / 100;
                 });
               },
               min: 0,
@@ -39,15 +42,17 @@ class SettingsPage extends State<Settings> {
               padding: EdgeInsets.only(top: dev.screenHeight * 0.1)),
           Container(
               child: Slider(
-                  value: gameAudio.toDouble(),
-                  label: '$gameAudio',
+                  value: gameAudio,
+                  label: '$gameLabel',
                   onChanged: (double value) {
                     setState(() {
-                      gameAudio = value.round();
+                      gameAudio = value;
+                      dev.gameVolume = gameAudio / 100;
                     });
                   },
                   min: 0,
-                  max: 100),
+                  max: 100,
+                  divisions: 100),
               padding: EdgeInsets.all(dev.screenWidth * 0.05))
         ], mainAxisAlignment: MainAxisAlignment.center));
   }
