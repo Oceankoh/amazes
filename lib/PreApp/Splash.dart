@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/PreApp/Home.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
+import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/services.dart';
 import 'package:animator/animator.dart';
 import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
+
+AudioCache player = AudioCache();
+Future<AudioPlayer> control;
+const bgm = 'Modified2.mp3';
 
 class Splash extends StatefulWidget {
   @override
@@ -48,8 +54,9 @@ class LoadAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     dev.screenHeight = MediaQuery.of(context).size.height;
     dev.screenWidth = MediaQuery.of(context).size.width;
-    dev.gameVolume = 0;
-    dev.bgVolume = 0;
+    dev.gameVolume = 0.5;
+    dev.bgVolume = 0.5;
+    control = player.play(bgm,volume: dev.bgVolume);
     return Container(
         child: Center(
             child: Column(children: [

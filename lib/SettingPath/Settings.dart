@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:a_maze_ment/PreApp/Splash.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
 
 class Settings extends StatefulWidget {
@@ -27,6 +28,9 @@ class SettingsPage extends State<Settings> {
                 setState(() {
                   bgAudio = value;
                   dev.bgVolume = bgAudio / 100;
+                  control.then((controller){
+                      controller.setVolume(dev.bgVolume);
+                  });
                 });
               },
               min: 0,
