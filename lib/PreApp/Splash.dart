@@ -26,6 +26,10 @@ class SplashState extends State<Splash> {
     ]);
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
+      control = player.play(bgm,volume: dev.bgVolume);
+      control.then((controller){
+        controller.setReleaseMode(ReleaseMode.LOOP);
+      });
       Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => HomePage()));
     });
   }
@@ -56,7 +60,6 @@ class LoadAnimation extends StatelessWidget {
     dev.screenWidth = MediaQuery.of(context).size.width;
     dev.gameVolume = 0.5;
     dev.bgVolume = 0.5;
-    control = player.play(bgm,volume: dev.bgVolume);
     return Container(
         child: Center(
             child: Column(children: [
