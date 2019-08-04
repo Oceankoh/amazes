@@ -128,7 +128,7 @@ class _MazeState extends State<GenerateMaze> {
   }
 
   move(int direction) async {
-    await player.play(moveSound,volume: dev.gameVolume);
+//    await player.play(moveSound,volume: dev.gameVolume);
     switch (direction) {
       case 1:
         //move up(+y)
