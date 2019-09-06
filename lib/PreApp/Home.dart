@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/PlayPath/MazeSpecs.dart';
-import 'package:a_maze_ment/AboutPath/About.dart';
+import 'package:a_maze_ment/AboutPath/Help.dart';
 import 'package:a_maze_ment/SettingPath/Settings.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
 import 'package:animator/animator.dart';
