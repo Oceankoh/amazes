@@ -12,7 +12,7 @@ class About extends StatelessWidget {
 				children: <Widget>[
 					Padding(
 						padding: EdgeInsets.only(left: dev.screenWidth * 0.1, top: dev.screenHeight * 0.15),
-						child: Text('About', style: Theme.of(context).textTheme.title)),
+						child: Text('Help', style: Theme.of(context).textTheme.title)),
 					Padding(
 						padding: EdgeInsets.all(dev.screenWidth * 0.1),
 						child: Text(
