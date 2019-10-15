@@ -33,6 +33,7 @@ class _MazeState extends State<GenerateMaze> {
   _MazeState(int s) {
     side = s;
     maze = generator.generate(side);
+    playerScore.timerBegin();
     maze[0][side - 1].icon = true;
     current = Coords(0, side - 1);
   }
@@ -42,7 +43,9 @@ class _MazeState extends State<GenerateMaze> {
     if (maze[maze.length - 1][0].getIcon()) {
       control =
           player.play(celebSound, volume: dev.bgVolume); //start playing audio
-      int finalScore = playerScore.calculate(side);
+      playerScore.timerEnd();
+      playerScore.calculate(side);
+      int finalScore = playerScore.score;
       return Scaffold(
           body: Column(children: [
         Center(
