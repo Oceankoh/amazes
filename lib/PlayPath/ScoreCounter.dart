@@ -6,14 +6,20 @@ class ScoreObject{
 	Stopwatch _time=Stopwatch();
 	timerBegin(){
 		_time.start();
+		print(_time);
 	}
 	timerEnd(){
 		_time.stop();
+		print(_time);
 	}
 	calculate(int mazeSize){
-		int timeTaken= _time.elapsedMilliseconds;
-		double curve = 10*mazeSize*exp((1/10*mazeSize)*timeTaken);
+		double timeTaken= _time.elapsedMilliseconds.toDouble()/1000;
+		double curve = 10*mazeSize*mazeSize*exp(-(timeTaken).toDouble()/(mazeSize*mazeSize));
 		_score = curve.round();
+		_time.reset();
+		print(timeTaken);
+		print(curve.round());
+		print(mazeSize);
 	}
 
 	int get score => _score;
