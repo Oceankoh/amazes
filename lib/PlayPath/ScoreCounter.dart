@@ -12,7 +12,10 @@ class ScoreObject{
 	}
 	calculate(int mazeSize){
 		int timeTaken= _time.elapsedMilliseconds;
-		double score = 10*mazeSize*exp((1/10*mazeSize)*timeTaken);
-		_score = score.round();
+		double curve = 10*mazeSize*exp((1/10*mazeSize)*timeTaken);
+		_score = curve.round();
 	}
+
+	int get score => _score;
+
 }
