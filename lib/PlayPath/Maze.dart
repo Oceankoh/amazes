@@ -5,12 +5,15 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:a_maze_ment/PlayPath/MazeGenAlgo.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
 import 'package:a_maze_ment/PreApp/Home.dart';
+import 'package:a_maze_ment/PlayPath/ScoreCounter.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
 import 'dart:ui';
 
 class GenerateMaze extends StatefulWidget {
   final int side;
+
   GenerateMaze({Key key, @required this.side}) : super(key: key);
+
   @override
   State createState() => _MazeState(side);
 }
@@ -18,13 +21,15 @@ class GenerateMaze extends StatefulWidget {
 AudioCache player = AudioCache();
 Future<AudioPlayer> control;
 const moveSound = 'Ding.mp3';
-const celebSound= 'DallaDalla.mp3';
+const celebSound = 'DallaDalla.mp3';
+ScoreObject playerScore = ScoreObject();
 
 class _MazeState extends State<GenerateMaze> {
   int side;
   List<List<Block>> maze;
   Coords current;
   MazeGen generator = MazeGen();
+
   _MazeState(int s) {
     side = s;
     maze = generator.generate(side);
@@ -35,25 +40,35 @@ class _MazeState extends State<GenerateMaze> {
   @override
   Widget build(BuildContext context) {
     if (maze[maze.length - 1][0].getIcon()) {
-      control=player.play(celebSound, volume: dev.bgVolume);
+      control =
+          player.play(celebSound, volume: dev.bgVolume); //start playing audio
+      int finalScore = playerScore.calculate(side);
       return Scaffold(
           body: Column(children: [
         Center(
             child: Text("You Win!!!",
-                style: Theme.of(context).textTheme.headline, textAlign: TextAlign.center)),
+                style: Theme.of(context).textTheme.headline,
+                textAlign: TextAlign.center)),
+        Center(
+            child: Text("Score: " + finalScore.toString(),
+                style: Theme.of(context).textTheme.caption,
+                textAlign: TextAlign.center)),
         Padding(
             child: MaterialButton(
                 height: 50,
                 minWidth: 200,
                 onPressed: () {
-                  control.then((controller){
+                  control.then((controller) {
                     controller.stop();
                   });
-                  Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => HomePage()));
+                  Navigator.pushReplacement(context,
+                      new MaterialPageRoute(builder: (context) => HomePage()));
                 },
                 padding: EdgeInsets.all(10),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                child: Text('Return To Home', style: Theme.of(context).textTheme.button)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                child: Text('Return To Home',
+                    style: Theme.of(context).textTheme.button)),
             padding: EdgeInsets.all(20))
       ], mainAxisAlignment: MainAxisAlignment.center));
     } else {
@@ -63,7 +78,8 @@ class _MazeState extends State<GenerateMaze> {
             decoration: BoxDecoration(color: Theme.of(context).canvasColor),
             padding: EdgeInsets.all(5),
             child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: side),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: side),
                 scrollDirection: Axis.vertical,
                 itemBuilder: drawMaze,
                 itemCount: side * side)),
@@ -86,24 +102,28 @@ class _MazeState extends State<GenerateMaze> {
                   Container(
                       key: Key("upButton"),
                       child: MaterialButton(
-                          height: (dev.screenHeight - dev.screenWidth * 1.2) / 2,
+                          height:
+                              (dev.screenHeight - dev.screenWidth * 1.2) / 2,
                           minWidth: dev.screenWidth * 0.4,
                           onPressed: () {
                             move(1);
                           },
                           child: Icon(Icons.keyboard_arrow_up,
-                              size: dev.screenHeight * 0.1, color: Colors.white)),
+                              size: dev.screenHeight * 0.1,
+                              color: Colors.white)),
                       alignment: Alignment.topCenter),
                   Container(
                       key: Key("downButton"),
                       child: MaterialButton(
-                          height: (dev.screenHeight - dev.screenWidth * 1.2) / 2,
+                          height:
+                              (dev.screenHeight - dev.screenWidth * 1.2) / 2,
                           minWidth: dev.screenWidth * 0.4,
                           onPressed: () {
                             move(3);
                           },
                           child: Icon(Icons.keyboard_arrow_down,
-                              size: dev.screenHeight * 0.1, color: Colors.white)),
+                              size: dev.screenHeight * 0.1,
+                              color: Colors.white)),
                       alignment: Alignment.bottomCenter)
                 ],
               ),
@@ -119,7 +139,10 @@ class _MazeState extends State<GenerateMaze> {
                           size: dev.screenHeight * 0.1, color: Colors.white)),
                   alignment: Alignment.centerRight)
             ]),
-            Row(children: [Container(width: dev.screenWidth * 0.1, height: dev.screenWidth * 0.1)])
+            Row(children: [
+              Container(
+                  width: dev.screenWidth * 0.1, height: dev.screenWidth * 0.1)
+            ])
           ],
           mainAxisAlignment: MainAxisAlignment.end,
         )
@@ -185,10 +208,10 @@ class _MazeState extends State<GenerateMaze> {
 
     double T = 1, R = 1, B = 1, L = 1;
 
-    if(x==0) L=2;
-    if(x==maze.length-1) R=2;
-    if(y==0) B=2;
-    if(y==maze.length-1) T=2;
+    if (x == 0) L = 2;
+    if (x == maze.length - 1) R = 2;
+    if (y == 0) B = 2;
+    if (y == maze.length - 1) T = 2;
 
     Container ret;
     if (maze[x][y].getUp()) up = Colors.white;
