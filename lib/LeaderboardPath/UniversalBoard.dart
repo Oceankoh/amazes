@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
-import 'package:a_maze_ment/Globals/device.dart' as dev;
 import 'package:firebase_database/firebase_database.dart';
 
 class UniversalBoard extends StatefulWidget {

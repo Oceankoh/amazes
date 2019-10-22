@@ -47,7 +47,7 @@ class _MazeState extends State<GenerateMaze> {
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
-      saveScore();
+      saveScore('temp username',finalScore);
 
       return Scaffold(
           body: Column(children: [
