@@ -5,7 +5,6 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:a_maze_ment/PlayPath/MazeGenAlgo.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
 import 'package:a_maze_ment/PreApp/Home.dart';
-import 'package:a_maze_ment/PlayPath/ScoreCounter.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
 import 'dart:ui';
 
@@ -22,7 +21,7 @@ AudioCache player = AudioCache();
 Future<AudioPlayer> control;
 const moveSound = 'Ding.mp3';
 const celebSound = 'DallaDalla.mp3';
-ScoreObject playerScore = ScoreObject();
+ScoreCounter playerScore = ScoreCounter();
 
 class _MazeState extends State<GenerateMaze> {
   int side;

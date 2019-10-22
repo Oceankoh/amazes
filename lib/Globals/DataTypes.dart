@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:core';
+import 'dart:convert';
 
 class Block {
   bool _up = true;
@@ -67,8 +68,7 @@ class Coords {
   }
 }
 
-class ScoreObject{
-  String _username;
+class ScoreCounter{
   int _score;
   Stopwatch _time=Stopwatch();
   timerBegin(){

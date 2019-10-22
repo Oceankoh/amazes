@@ -23,6 +23,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   material_design_icons_flutter: ^3.2.3895
   audioplayers: ^0.13.1
+  firebase_database: ^1.0.3
 
 dev_dependencies:
   flutter_test:
