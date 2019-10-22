@@ -50,6 +50,7 @@ class Block {
 class Coords {
   int _x;
   int _y;
+
   Coords(int x, int y) {
     _x = x;
     _y = y;
@@ -68,25 +69,41 @@ class Coords {
   }
 }
 
-class ScoreCounter{
+class ScoreCounter {
   int _score;
-  Stopwatch _time=Stopwatch();
-  timerBegin(){
+  Stopwatch _time = Stopwatch();
+
+  timerBegin() {
     _time.start();
     print(_time);
   }
-  timerEnd(){
+
+  timerEnd() {
     _time.stop();
     print(_time);
   }
-  calculate(int mazeSize){
-    double timeTaken= _time.elapsedMilliseconds.toDouble()/1000;
-    double curve = pow(mazeSize,e)*exp(-(timeTaken).toDouble()/pow(mazeSize,e));
+
+  calculate(int mazeSize) {
+    double timeTaken = _time.elapsedMilliseconds.toDouble() / 1000;
+    double curve =
+        pow(mazeSize, e) * exp(-(timeTaken).toDouble() / pow(mazeSize, e));
     _score = curve.truncate();
     _time.reset();
     print(curve);
   }
 
   int get score => _score;
+}
 
+class ScoreObject {
+  final String username;
+  final int score;
+
+  ScoreObject(this.username, this.score);
+
+  ScoreObject.fromJson(Map<String, dynamic> json)
+      : username = json['username'],
+        score = json['score'];
+
+  Map<String, dynamic> toJson() => {'username': username, 'score': score};
 }

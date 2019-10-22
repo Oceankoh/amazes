@@ -7,6 +7,7 @@ import 'package:a_maze_ment/Globals/DataTypes.dart';
 import 'package:a_maze_ment/PreApp/Home.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
 import 'dart:ui';
+import 'dart:convert';
 
 class GenerateMaze extends StatefulWidget {
   final int side;
@@ -20,7 +21,7 @@ class GenerateMaze extends StatefulWidget {
 AudioCache player = AudioCache();
 Future<AudioPlayer> control;
 const moveSound = 'Ding.mp3';
-const celebSound = 'DallaDalla.mp3';
+const completeSound = 'DallaDalla.mp3';
 ScoreCounter playerScore = ScoreCounter();
 
 class _MazeState extends State<GenerateMaze> {
@@ -40,11 +41,14 @@ class _MazeState extends State<GenerateMaze> {
   @override
   Widget build(BuildContext context) {
     if (maze[maze.length - 1][0].getIcon()) {
-      control =
-          player.play(celebSound, volume: dev.bgVolume); //start playing audio
+      // player has reached end
+      control = player.play(completeSound,
+          volume: dev.bgVolume); //start playing win audio
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
+      saveScore();
+
       return Scaffold(
           body: Column(children: [
         Center(
@@ -74,6 +78,7 @@ class _MazeState extends State<GenerateMaze> {
             padding: EdgeInsets.all(20))
       ], mainAxisAlignment: MainAxisAlignment.center));
     } else {
+      //player still in the middle of the maze
       return Scaffold(
           body: Stack(children: [
         Container(
@@ -150,6 +155,12 @@ class _MazeState extends State<GenerateMaze> {
         )
       ]));
     }
+  }
+
+  saveScore(String username, int score) {
+    String scoreJson = jsonEncode(ScoreObject(username, score));
+
+    //sharedpreferences thing
   }
 
   move(int direction) async {
