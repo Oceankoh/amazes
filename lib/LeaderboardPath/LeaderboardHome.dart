@@ -41,7 +41,7 @@ class LBOptionsState extends State<SelectLeaderboard> {
                   borderRadius: BorderRadius.circular(13)))),
       Padding(
           child: Center(
-              child: MaterialButton(
+              child: MaterialButton(  
                   child:
                       Text('Back', style: Theme.of(context).textTheme.button),
                   onPressed: () {
