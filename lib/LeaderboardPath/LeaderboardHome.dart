@@ -1,5 +1,4 @@
-import 'package:a_maze_ment/LeaderboardPath/WorldBoard.dart';
-import 'package:a_maze_ment/LeaderboardPath/DeviceBoard.dart';
+
 import 'package:a_maze_ment/PreApp/Home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
