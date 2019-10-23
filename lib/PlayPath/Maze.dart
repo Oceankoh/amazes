@@ -158,7 +158,14 @@ class _MazeState extends State<GenerateMaze> {
   }
 
   saveScore(String username, int score) {
-    String scoreJson = jsonEncode(ScoreObject(username, score));
+    String retreivedJson; // path to locally saved leaderboard
+    var savedLeaderboard=jsonDecode(retreivedJson); //decode leaderboard
+    ScoreObjectList scoreObjectList=ScoreObjectList.fromJson(savedLeaderboard);
+
+    ScoreObject newScore=new ScoreObject(username: username,score: score);
+    scoreObjectList.scores.add(newScore);
+    String updatedLeaderboard = jsonEncode(savedLeaderboard);
+
 
     //sharedpreferences thing
   }

@@ -19,16 +19,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  animator: ^0.1.1
+  animator: ^1.0.0+1
   cupertino_icons: ^0.1.2
   material_design_icons_flutter: ^3.2.3895
   audioplayers: ^0.13.1
   firebase_database: ^1.0.3
+  json_annotation: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.7.1
+  build_runner: 1.0.0
+  json_serializable: ^2.0.0
 
 # The following section is specific to Flutter.
 flutter:
