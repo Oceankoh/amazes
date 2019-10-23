@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:core';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'DataTypes.g.dart';
 
 class Block {
   bool _up = true;
@@ -94,15 +98,27 @@ class ScoreCounter {
   int get score => _score;
 }
 
+@JsonSerializable()
 class ScoreObject {
   final String username;
   final int score;
+  ScoreObject({this.username, this.score});
 
-  ScoreObject(this.username, this.score);
+  factory ScoreObject.fromJson(Map<String, dynamic> json) =>
+      _$ScoreObjectFromJson(json);
 
-  ScoreObject.fromJson(Map<String, dynamic> json)
-      : username = json['username'],
-        score = json['score'];
+  Map<String, dynamic> toJson() => _$ScoreObjectToJson(this);
+}
 
-  Map<String, dynamic> toJson() => {'username': username, 'score': score};
+class ScoreObjectList {
+  final List<ScoreObject> scores;
+  ScoreObjectList({this.scores});
+
+  factory ScoreObjectList.fromJson(List<dynamic> json) {
+    return ScoreObjectList(
+        scores: json
+            .map((e) => ScoreObject.fromJson(e as Map<String, dynamic>))
+            .toList());
+  }
+
 }
