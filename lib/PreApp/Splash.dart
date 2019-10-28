@@ -21,9 +21,6 @@ class Splash extends StatefulWidget {
 class SplashState extends State<Splash> {
   @override
   void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
       control = player.play(bgm,volume: dev.bgVolume);
