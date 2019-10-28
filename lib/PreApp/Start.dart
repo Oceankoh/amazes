@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:a_maze_ment/PreApp/Splash.dart';
 import 'dart:ui';
 
@@ -7,6 +8,9 @@ void main() => runApp(BaseApp());
 class BaseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return MaterialApp(
         theme: ThemeData(
             brightness: Brightness.dark,

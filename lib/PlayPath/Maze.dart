@@ -21,7 +21,7 @@ class GenerateMaze extends StatefulWidget {
 AudioCache player = AudioCache();
 Future<AudioPlayer> control;
 const moveSound = 'Ding.mp3';
-const completeSound = 'DallaDalla.mp3';
+const completeSound = 'india.mp3';
 ScoreCounter playerScore = ScoreCounter();
 
 class _MazeState extends State<GenerateMaze> {
@@ -47,7 +47,7 @@ class _MazeState extends State<GenerateMaze> {
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
-      saveScore('temp username',finalScore);
+      //saveScore('temp username',finalScore);
 
       return Scaffold(
           body: Column(children: [
@@ -159,13 +159,13 @@ class _MazeState extends State<GenerateMaze> {
 
   saveScore(String username, int score) {
     String retreivedJson; // path to locally saved leaderboard
-    var savedLeaderboard=jsonDecode(retreivedJson); //decode leaderboard
+    var savedLeaderboard=json.decode(retreivedJson); //decode leaderboard
     ScoreObjectList scoreObjectList=ScoreObjectList.fromJson(savedLeaderboard);
 
     ScoreObject newScore=new ScoreObject(username: username,score: score);
     scoreObjectList.scores.add(newScore);
-    String updatedLeaderboard = jsonEncode(savedLeaderboard);
-
+    String updatedLeaderboard = jsonEncode(scoreObjectList);
+    print(updatedLeaderboard);
 
     //sharedpreferences thing
   }
