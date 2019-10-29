@@ -24,7 +24,7 @@ class About extends StatelessWidget {
 							height: 50,
 							minWidth: 200,
 							onPressed: () {
-								Navigator.push(
+								Navigator.pushReplacement(
 									context, new MaterialPageRoute(builder: (context) => HomePage()));
 							},
 							padding: EdgeInsets.all(dev.screenWidth*0.01),
