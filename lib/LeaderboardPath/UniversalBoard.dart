@@ -8,8 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
 
 class UniversalBoard extends StatefulWidget {
-  String boardId;
-  bool isLocal;
+  final String boardId;
+  final bool isLocal;
 
   UniversalBoard({Key key, this.boardId, this.isLocal}) : super(key: key);
 

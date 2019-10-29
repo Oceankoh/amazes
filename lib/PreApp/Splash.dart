@@ -3,11 +3,12 @@ import 'package:a_maze_ment/PreApp/Home.dart';
 import 'package:a_maze_ment/Globals/device.dart' as dev;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
-import 'package:flutter/services.dart';
 import 'package:animator/animator.dart';
 import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 AudioCache player = AudioCache();
 Future<AudioPlayer> control;
@@ -19,9 +20,18 @@ class Splash extends StatefulWidget {
 }
 
 class SplashState extends State<Splash> {
+
+  initSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.getStringList("localBoard")==null){
+      prefs.setStringList("localBoard", []);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    initSharedPreferences();
     Future.delayed(Duration(seconds: 3), () {
       control = player.play(bgm, volume: dev.bgVolume);
       control.then((controller) {

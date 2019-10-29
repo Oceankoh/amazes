@@ -21,8 +21,8 @@ class GenerateMaze extends StatefulWidget {
 
 AudioCache player = AudioCache();
 Future<AudioPlayer> control;
-const moveSound = 'Ding.mp3';
-const completeSound = 'DallaDalla.mp3';
+const moveSound = 'movementsound';
+const completeSound = 'congratualationsaudio';
 ScoreCounter playerScore = ScoreCounter();
 
 class _MazeState extends State<GenerateMaze> {
@@ -44,7 +44,8 @@ class _MazeState extends State<GenerateMaze> {
   Widget build(BuildContext context) {
     if (maze[maze.length - 1][0].getIcon()) {
       // player has reached end
-      control = player.play(completeSound, volume: dev.bgVolume); //start playing win audio
+//      control = player.play(completeSound,
+//          volume: dev.bgVolume); //start playing win audio
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
@@ -67,32 +68,26 @@ class _MazeState extends State<GenerateMaze> {
               minLines: 1,
             ),
             padding: EdgeInsets.all(10)),
-            Padding(
-                child: MaterialButton(
-                    height: 50,
-                    minWidth: 200,
-                    onPressed: () {
-                      saveScore(textController.text, finalScore);
-                      control.then((controller) {
-                        controller.stop();
-                      });
-                      Navigator.pushReplacement(context,
-                          new MaterialPageRoute(builder: (context) => HomePage()));
-                    },
-                    padding: EdgeInsets.all(10),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Text('Save Score',
-                        style: Theme.of(context).textTheme.button)),
-                padding: EdgeInsets.all(20)),
         Padding(
             child: MaterialButton(
                 height: 50,
                 minWidth: 200,
                 onPressed: () {
-                  control.then((controller) {
-                    controller.stop();
-                  });
+                  saveScore(textController.text, finalScore);
+                  Navigator.pushReplacement(context,
+                      new MaterialPageRoute(builder: (context) => HomePage()));
+                },
+                padding: EdgeInsets.all(10),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                child: Text('Save Score',
+                    style: Theme.of(context).textTheme.button)),
+            padding: EdgeInsets.all(20)),
+        Padding(
+            child: MaterialButton(
+                height: 50,
+                minWidth: 200,
+                onPressed: () {
                   Navigator.pushReplacement(context,
                       new MaterialPageRoute(builder: (context) => HomePage()));
                 },
@@ -185,10 +180,12 @@ class _MazeState extends State<GenerateMaze> {
 
   saveScore(String username, int score) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> leaderBoard =prefs.getStringList("localBoard");
+    List<String> leaderBoard = prefs.getStringList("localBoard");
     ScoreObject newScore = new ScoreObject(username: username, score: score);
     leaderBoard.add(jsonEncode(newScore));
-    leaderBoard.sort((a,b)=>jsonDecode(b)["score"].compareTo(jsonDecode(a)["score"])); //sort descending order
+    if (leaderBoard.length >= 2)
+      leaderBoard.sort((a, b) => jsonDecode(b)["score"]
+          .compareTo(jsonDecode(a)["score"])); //sort descending order
     await prefs.setStringList("localBoard", leaderBoard);
     print(leaderBoard);
 
@@ -196,7 +193,7 @@ class _MazeState extends State<GenerateMaze> {
   }
 
   move(int direction) async {
-    await player.play(moveSound,volume: dev.gameVolume);
+    //await player.play(moveSound, volume: dev.gameVolume);
     switch (direction) {
       case 1:
         //move up(+y)
