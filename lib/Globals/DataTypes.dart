@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 import 'dart:core';
 import 'package:json_annotation/json_annotation.dart';
@@ -109,6 +108,7 @@ class ScoreObject {
   Map<String, dynamic> toJson() => _$ScoreObjectToJson(this);
 }
 
+//TODO: determine if need to be removed
 class ScoreObjectList {
   final List<ScoreObject> scores;
   ScoreObjectList({this.scores});

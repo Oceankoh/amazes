@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:a_maze_ment/PlayPath/MazeGenAlgo.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
@@ -47,7 +48,7 @@ class _MazeState extends State<GenerateMaze> {
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
-      //saveScore('temp username',finalScore);
+      saveScore('temp username',finalScore);
 
       return Scaffold(
           body: Column(children: [
@@ -157,17 +158,15 @@ class _MazeState extends State<GenerateMaze> {
     }
   }
 
-  saveScore(String username, int score) {
-    String retreivedJson; // path to locally saved leaderboard
-    var savedLeaderboard=json.decode(retreivedJson); //decode leaderboard
-    ScoreObjectList scoreObjectList=ScoreObjectList.fromJson(savedLeaderboard);
-
+  saveScore(String username, int score) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> leaderBoard = (prefs.getStringList("localBoard") ?? List<String>());
     ScoreObject newScore=new ScoreObject(username: username,score: score);
-    scoreObjectList.scores.add(newScore);
-    String updatedLeaderboard = jsonEncode(scoreObjectList);
-    print(updatedLeaderboard);
+    leaderBoard.add(jsonEncode(newScore));
+    await prefs.setStringList("localBoard", leaderBoard);
 
-    //sharedpreferences thing
+    print(leaderBoard.toString());
+    //online connection saving
   }
 
   move(int direction) async {
