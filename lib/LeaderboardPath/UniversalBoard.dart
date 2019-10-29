@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UniversalBoard extends StatefulWidget {
   String boardId;
@@ -53,9 +54,11 @@ class UniversalLeaderboard extends State<UniversalBoard> {
   }
 
   Future getScores() async {
-    List<ScoreObject> scores;
+    List<String> scores;
     if (isLocal) {
-      scores = null; //TODO get data from local
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      scores = prefs.getStringList("localBoard"); //TODO get data from local
+      print(scores.toString());
       return scores;
     } else {
       DatabaseReference database = FirebaseDatabase.instance.reference();
