@@ -30,6 +30,7 @@ class _MazeState extends State<GenerateMaze> {
   List<List<Block>> maze;
   Coords current;
   MazeGen generator = MazeGen();
+  final textController = TextEditingController();
 
   _MazeState(int s) {
     side = s;
@@ -48,7 +49,6 @@ class _MazeState extends State<GenerateMaze> {
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
-      saveScore('temp username',finalScore);
 
       return Scaffold(
           body: Column(children: [
@@ -60,6 +60,32 @@ class _MazeState extends State<GenerateMaze> {
             child: Text("Score: " + finalScore.toString(),
                 style: Theme.of(context).textTheme.caption,
                 textAlign: TextAlign.center)),
+        Padding(
+            child: TextField(
+              decoration: InputDecoration(hintText: "Enter Username"),
+              controller: textController,
+              maxLength: 20,
+              minLines: 1,
+            ),
+            padding: EdgeInsets.all(10)),
+            Padding(
+                child: MaterialButton(
+                    height: 50,
+                    minWidth: 200,
+                    onPressed: () {
+                      saveScore(textController.text, finalScore);
+                      control.then((controller) {
+                        controller.stop();
+                      });
+                      Navigator.pushReplacement(context,
+                          new MaterialPageRoute(builder: (context) => HomePage()));
+                    },
+                    padding: EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    child: Text('Save Score',
+                        style: Theme.of(context).textTheme.button)),
+                padding: EdgeInsets.all(20)),
         Padding(
             child: MaterialButton(
                 height: 50,
@@ -160,17 +186,17 @@ class _MazeState extends State<GenerateMaze> {
 
   saveScore(String username, int score) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> leaderBoard = (prefs.getStringList("localBoard") ?? List<String>());
-    ScoreObject newScore=new ScoreObject(username: username,score: score);
+    List<String> leaderBoard =prefs.getStringList("localBoard");
+    ScoreObject newScore = new ScoreObject(username: username, score: score);
     leaderBoard.add(jsonEncode(newScore));
     await prefs.setStringList("localBoard", leaderBoard);
+    print(leaderBoard);
 
-    print(leaderBoard.toString());
-    //online connection saving
+    //TODO online connection saving
   }
 
   move(int direction) async {
-//    await player.play(moveSound,volume: dev.gameVolume);
+    await player.play(moveSound,volume: dev.gameVolume);
     switch (direction) {
       case 1:
         //move up(+y)
@@ -278,5 +304,11 @@ class _MazeState extends State<GenerateMaze> {
     }
 
     return ret;
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 }
