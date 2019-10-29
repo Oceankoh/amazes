@@ -22,7 +22,7 @@ class GenerateMaze extends StatefulWidget {
 AudioCache player = AudioCache();
 Future<AudioPlayer> control;
 const moveSound = 'Ding.mp3';
-const completeSound = 'india.mp3';
+const completeSound = 'DallaDalla.mp3';
 ScoreCounter playerScore = ScoreCounter();
 
 class _MazeState extends State<GenerateMaze> {
@@ -44,8 +44,7 @@ class _MazeState extends State<GenerateMaze> {
   Widget build(BuildContext context) {
     if (maze[maze.length - 1][0].getIcon()) {
       // player has reached end
-      control = player.play(completeSound,
-          volume: dev.bgVolume); //start playing win audio
+      control = player.play(completeSound, volume: dev.bgVolume); //start playing win audio
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
@@ -189,6 +188,7 @@ class _MazeState extends State<GenerateMaze> {
     List<String> leaderBoard =prefs.getStringList("localBoard");
     ScoreObject newScore = new ScoreObject(username: username, score: score);
     leaderBoard.add(jsonEncode(newScore));
+    leaderBoard.sort((a,b)=>jsonDecode(b)["score"].compareTo(jsonDecode(a)["score"])); //sort descending order
     await prefs.setStringList("localBoard", leaderBoard);
     print(leaderBoard);
 

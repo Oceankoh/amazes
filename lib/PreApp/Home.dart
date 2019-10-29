@@ -70,7 +70,7 @@ class HomePageState extends State<HomePage> {
                     child: MaterialButton(
                       minWidth: dev.screenWidth * 0.5,
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SelectLeaderboard()));

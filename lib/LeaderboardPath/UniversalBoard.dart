@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:a_maze_ment/PreApp/Home.dart';
-import 'package:a_maze_ment/LeaderboardPath/DeviceBoard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:a_maze_ment/Globals/DataTypes.dart';
@@ -32,7 +31,7 @@ class UniversalLeaderboard extends State<UniversalBoard> {
       SliverAppBar(
           pinned: true,
           floating: true,
-          expandedHeight: 150,
+          expandedHeight: dev.screenHeight/6,
           flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
       scoreList()
     ]));
