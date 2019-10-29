@@ -28,22 +28,13 @@ class UniversalLeaderboard extends State<UniversalBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(children: [
-      CustomScrollView(slivers: [
-        const SliverAppBar(
-            pinned: true,
-            expandedHeight: 150,
-            flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
-        scoreList()
-      ], shrinkWrap: true),
-      MaterialButton(
-        onPressed: () {
-          Navigator.push(
-              context, new MaterialPageRoute(builder: (context) => HomePage()));
-        },
-        child:
-            Text("Return to Home", style: Theme.of(context).textTheme.button),
-      )
+        body: CustomScrollView(shrinkWrap: true, slivers: <Widget>[
+      SliverAppBar(
+          pinned: true,
+          floating: true,
+          expandedHeight: 150,
+          flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
+      scoreList()
     ]));
   }
 
@@ -51,31 +42,30 @@ class UniversalLeaderboard extends State<UniversalBoard> {
     if (isLocal) {
       getLocalScores();
       if (localBoard != null) {
-        return SliverList(
-            delegate: SliverChildBuilderDelegate(
-                (context, index) => Row(
-                      children: [
-                        Padding(
-                            child: Text((index + 1).toString(),
-                                style: Theme.of(context).textTheme.body1),
-                            padding: EdgeInsets.all(10)),
-                        Padding(
-                          child: Container(
-                              child: Text(
-                                  jsonDecode(localBoard[index])["username"],
-                                  style: Theme.of(context).textTheme.body1),
-                              width: dev.screenWidth * 3 / 5),
-                          padding: EdgeInsets.all(10),
-                        ),
-                        Padding(
-                            child: Text(
-                                jsonDecode(localBoard[index])["score"]
-                                    .toString(),
-                                style: Theme.of(context).textTheme.body1),
-                            padding: EdgeInsets.all(10))
-                      ],
-                    ),
-                childCount: localBoard.length));
+        return SliverFixedExtentList(
+            itemExtent: 50,
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return Row(
+                children: [
+                  Padding(
+                      child: Text((index + 1).toString(),
+                          style: Theme.of(context).textTheme.body1),
+                      padding: EdgeInsets.all(10)),
+                  Padding(
+                    child: Container(
+                        child: Text(jsonDecode(localBoard[index])["username"],
+                            style: Theme.of(context).textTheme.body1),
+                        width: dev.screenWidth * 3 / 5),
+                    padding: EdgeInsets.all(10),
+                  ),
+                  Padding(
+                      child: Text(
+                          jsonDecode(localBoard[index])["score"].toString(),
+                          style: Theme.of(context).textTheme.body1),
+                      padding: EdgeInsets.all(10))
+                ],
+              );
+            }, childCount: localBoard.length));
       } else {
         return SliverList(
             delegate: SliverChildBuilderDelegate(
