@@ -22,7 +22,7 @@ class LBOptionsState extends State<SelectLeaderboard> {
                   child: Text('Local Leaderboard',
                       style: Theme.of(context).textTheme.button),
                   onPressed: () {
-                    Navigator.pushReplacement(context,
+                    Navigator.push(context,
                         MaterialPageRoute(builder: (context) => UniversalBoard(isLocal: true)));
                   },
                   padding: EdgeInsets.all(10),
@@ -33,7 +33,7 @@ class LBOptionsState extends State<SelectLeaderboard> {
               child: Text('Private Leaderboard',
                   style: Theme.of(context).textTheme.button),
               onPressed: () {
-                Navigator.pushReplacement(context,
+                Navigator.push(context,
                     MaterialPageRoute(builder: (context) => HomePage()));
               },
               padding: EdgeInsets.all(10),
