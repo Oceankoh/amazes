@@ -23,11 +23,12 @@ class SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
-      control = player.play(bgm,volume: dev.bgVolume);
-      control.then((controller){
+      control = player.play(bgm, volume: dev.bgVolume);
+      control.then((controller) {
         controller.setReleaseMode(ReleaseMode.LOOP);
       });
-      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.pushReplacement(
+          context, new MaterialPageRoute(builder: (context) => HomePage()));
     });
   }
 
@@ -36,17 +37,6 @@ class SplashState extends State<Splash> {
     return Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         body: Center(key: UniqueKey(), child: LoadAnimation()));
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
   }
 }
 
@@ -70,7 +60,8 @@ class LoadAnimation extends StatelessWidget {
                   angle: anim.value,
                   child: Container(
                     decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage('assets/MazeCircle.png')),
+                      image: DecorationImage(
+                          image: AssetImage('assets/MazeCircle.png')),
                       shape: BoxShape.circle,
                     ),
                     width: dev.screenWidth * 0.2,

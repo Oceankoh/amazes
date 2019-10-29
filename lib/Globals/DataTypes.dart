@@ -77,12 +77,10 @@ class ScoreCounter {
 
   timerBegin() {
     _time.start();
-    print(_time);
   }
 
   timerEnd() {
     _time.stop();
-    print(_time);
   }
 
   calculate(int mazeSize) {
