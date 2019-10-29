@@ -1,4 +1,5 @@
 
+import 'package:a_maze_ment/LeaderboardPath/UniversalBoard.dart';
 import 'package:a_maze_ment/PreApp/Home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class LBOptionsState extends State<SelectLeaderboard> {
                       style: Theme.of(context).textTheme.button),
                   onPressed: () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                        MaterialPageRoute(builder: (context) => UniversalBoard(isLocal: true)));
                   },
                   padding: EdgeInsets.all(10),
                   shape: RoundedRectangleBorder(
