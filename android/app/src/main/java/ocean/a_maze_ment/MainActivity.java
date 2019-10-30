@@ -1,4 +1,4 @@
-package ocean.a_maze_ment;
+package com.ocean.aMazes;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

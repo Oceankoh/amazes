@@ -1,4 +1,4 @@
-package com.example.a_maze_ment
+package com.example.aMazes
 
 import android.os.Bundle
 

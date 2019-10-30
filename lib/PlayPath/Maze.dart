@@ -3,10 +3,10 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audio_cache.dart';
-import 'package:a_maze_ment/PlayPath/MazeGenAlgo.dart';
-import 'package:a_maze_ment/Globals/DataTypes.dart';
-import 'package:a_maze_ment/PreApp/Home.dart';
-import 'package:a_maze_ment/Globals/device.dart' as dev;
+import 'package:aMazes/PlayPath/MazeGenAlgo.dart';
+import 'package:aMazes/Globals/DataTypes.dart';
+import 'package:aMazes/PreApp/Home.dart';
+import 'package:aMazes/Globals/device.dart' as dev;
 import 'dart:ui';
 import 'dart:convert';
 

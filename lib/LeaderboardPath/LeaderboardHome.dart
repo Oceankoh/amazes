@@ -1,9 +1,9 @@
 
-import 'package:a_maze_ment/LeaderboardPath/UniversalBoard.dart';
-import 'package:a_maze_ment/PreApp/Home.dart';
+import 'package:aMazes/LeaderboardPath/UniversalBoard.dart';
+import 'package:aMazes/PreApp/Home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:a_maze_ment/Globals/device.dart' as dev;
+import 'package:aMazes/Globals/device.dart' as dev;
 
 class SelectLeaderboard extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class LBOptionsState extends State<SelectLeaderboard> {
                   style: Theme.of(context).textTheme.button),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                    MaterialPageRoute(builder: (context) => UniversalBoard(isLocal: false)));
               },
               padding: EdgeInsets.all(10),
               shape: RoundedRectangleBorder(

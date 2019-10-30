@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'dart:collection';
-import 'package:a_maze_ment/Globals/DataTypes.dart';
+import 'package:aMazes/Globals/DataTypes.dart';
 
 class MazeGen {
   //variables
@@ -63,7 +63,7 @@ class MazeGen {
         randomizer.add(4);
       }
     }
-    if (unvisited && randomizer.length>0) {
+    if (unvisited && randomizer.length > 0) {
       randomizer.shuffle(Random());
       switch (randomizer[0]) {
         case 1: //up
@@ -81,6 +81,7 @@ class MazeGen {
         case 3: //down
           maze[x][y].down = false;
           maze[x][y - 1].up = false;
+          visited.add(Coords(x, y));
           algo(Coords(x, y - 1));
           break;
         case 4: //left

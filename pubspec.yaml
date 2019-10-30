@@ -1,4 +1,4 @@
-name: a_maze_ment
+name: aMazes
 description: Mobile Game about mazes for Computer Science IA
 
 # The following defines the version and build number for your application.
@@ -23,7 +23,9 @@ dependencies:
   cupertino_icons: ^0.1.2
   material_design_icons_flutter: ^3.2.3895
   audioplayers: ^0.13.1
-  firebase_database: ^1.0.3
+  firebase_core: ^0.4.0+9
+  firebase_analytics: ^5.0.2
+  cloud_firestore: ^0.12.9+6
   json_annotation: ^2.0.0
   shared_preferences: ^0.5.4+3
 
