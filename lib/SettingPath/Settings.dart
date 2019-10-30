@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:a_maze_ment/PreApp/Splash.dart';
-import 'package:a_maze_ment/Globals/device.dart' as dev;
+import 'package:aMazes/PreApp/Splash.dart';
+import 'package:aMazes/Globals/device.dart' as dev;
 
 class Settings extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:a_maze_ment/Globals/device.dart' as dev;
-import 'package:a_maze_ment/PlayPath/Maze.dart';
+import 'package:aMazes/Globals/device.dart' as dev;
+import 'package:aMazes/PlayPath/Maze.dart';
 
 int mazeSize = 15;
 int minimum = 2;

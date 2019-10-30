@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:a_maze_ment/PreApp/Splash.dart';
+import 'package:aMazes/PreApp/Splash.dart';
 import 'dart:ui';
 
 void main() => runApp(BaseApp());

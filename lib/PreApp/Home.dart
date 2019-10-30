@@ -1,9 +1,9 @@
-import 'package:a_maze_ment/LeaderboardPath/LeaderboardHome.dart';
+import 'package:aMazes/LeaderboardPath/LeaderboardHome.dart';
 import 'package:flutter/material.dart';
-import 'package:a_maze_ment/PlayPath/MazeSpecs.dart';
-import 'package:a_maze_ment/AboutPath/Help.dart';
-import 'package:a_maze_ment/SettingPath/Settings.dart';
-import 'package:a_maze_ment/Globals/device.dart' as dev;
+import 'package:aMazes/PlayPath/MazeSpecs.dart';
+import 'package:aMazes/AboutPath/Help.dart';
+import 'package:aMazes/SettingPath/Settings.dart';
+import 'package:aMazes/Globals/device.dart' as dev;
 import 'package:animator/animator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:math';
