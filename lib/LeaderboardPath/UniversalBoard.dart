@@ -31,7 +31,7 @@ class UniversalLeaderboard extends State<UniversalBoard> {
       SliverAppBar(
           pinned: true,
           floating: true,
-          expandedHeight: dev.screenHeight/6,
+          expandedHeight: dev.screenHeight / 6,
           flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
       scoreList()
     ]));
@@ -47,20 +47,24 @@ class UniversalLeaderboard extends State<UniversalBoard> {
               return Row(
                 children: [
                   Padding(
-                      child: Text((index + 1).toString(),
-                          style: Theme.of(context).textTheme.body1),
+                      child: Container(
+                          child: Text((index + 1).toString(),
+                              style: Theme.of(context).textTheme.body1),
+                          width: dev.screenWidth / 10),
                       padding: EdgeInsets.all(10)),
                   Padding(
                     child: Container(
                         child: Text(jsonDecode(localBoard[index])["username"],
                             style: Theme.of(context).textTheme.body1),
-                        width: dev.screenWidth * 3 / 5),
+                        width: dev.screenWidth / 2),
                     padding: EdgeInsets.all(10),
                   ),
                   Padding(
-                      child: Text(
-                          jsonDecode(localBoard[index])["score"].toString(),
-                          style: Theme.of(context).textTheme.body1),
+                      child: Container(
+                          child: Text(
+                              jsonDecode(localBoard[index])["score"].toString(),
+                              style: Theme.of(context).textTheme.body1),
+                          width: dev.screenWidth / 5),
                       padding: EdgeInsets.all(10))
                 ],
               );

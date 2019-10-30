@@ -35,6 +35,7 @@ class _MazeState extends State<GenerateMaze> {
   _MazeState(int s) {
     side = s;
     maze = generator.generate(side);
+    playerScore.timerReset();//ensure timer starts from 0 all the time
     playerScore.timerBegin();
     maze[0][side - 1].icon = true;
     current = Coords(0, side - 1);

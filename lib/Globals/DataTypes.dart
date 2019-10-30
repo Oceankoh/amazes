@@ -83,6 +83,10 @@ class ScoreCounter {
     _time.stop();
   }
 
+  timerReset(){
+    _time.reset();
+  }
+
   calculate(int mazeSize) {
     double timeTaken = _time.elapsedMilliseconds.toDouble() / 500;
     double curve =
