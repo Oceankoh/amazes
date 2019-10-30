@@ -1,3 +1,4 @@
-# a_maze_ment
+amazes
+---
 
 Mobile Game about mazes for Computer Science IA
