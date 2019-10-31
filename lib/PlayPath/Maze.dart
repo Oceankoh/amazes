@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -35,7 +36,7 @@ class _MazeState extends State<GenerateMaze> {
   _MazeState(int s) {
     side = s;
     maze = generator.generate(side);
-    playerScore.timerReset();//ensure timer starts from 0 all the time
+    playerScore.timerReset(); //ensure timer starts from 0 all the time
     playerScore.timerBegin();
     maze[0][side - 1].icon = true;
     current = Coords(0, side - 1);
@@ -190,7 +191,13 @@ class _MazeState extends State<GenerateMaze> {
     await prefs.setStringList("localBoard", leaderBoard);
     print(leaderBoard);
 
-    //TODO online connection saving
+    if (prefs.getString("onlineBoardID") != null) {
+      List<String> scoreAdd = [jsonEncode(newScore)];
+      await Firestore.instance
+          .collection("Leaderboard")
+          .document(prefs.getString("onlineBoardID"))
+          .updateData({"Scores": FieldValue.arrayUnion(scoreAdd)});
+    }
   }
 
   move(int direction) async {
