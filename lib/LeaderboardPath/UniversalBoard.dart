@@ -16,23 +16,23 @@ class UniversalBoard extends StatefulWidget {
 }
 
 class UniversalLeaderboard extends State<UniversalBoard> {
-  String privateBoardID;
+  String onlineBoardID;
   bool isLocal;
   List<dynamic> displayBoard;
 
-  UniversalLeaderboard(this.privateBoardID, this.isLocal);
+  UniversalLeaderboard(this.onlineBoardID, this.isLocal);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: CustomScrollView(shrinkWrap: true, slivers: <Widget>[
-          SliverAppBar(
-              pinned: true,
-              floating: true,
-              expandedHeight: dev.screenHeight / 6,
-              flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
-          scoreList()
-        ]));
+      SliverAppBar(
+          pinned: true,
+          floating: true,
+          expandedHeight: dev.screenHeight / 6,
+          flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
+      scoreList()
+    ]));
   }
 
   Widget scoreList() {
@@ -53,19 +53,13 @@ class UniversalLeaderboard extends State<UniversalBoard> {
                 Padding(
                     child: Container(
                         child: Text((index + 1).toString(),
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .body1),
+                            style: Theme.of(context).textTheme.body1),
                         width: dev.screenWidth / 10),
                     padding: EdgeInsets.all(10)),
                 Padding(
                   child: Container(
                       child: Text(jsonDecode(displayBoard[index])["username"],
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .body1),
+                          style: Theme.of(context).textTheme.body1),
                       width: dev.screenWidth / 2),
                   padding: EdgeInsets.all(10),
                 ),
@@ -73,10 +67,7 @@ class UniversalLeaderboard extends State<UniversalBoard> {
                     child: Container(
                         child: Text(
                             jsonDecode(displayBoard[index])["score"].toString(),
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .body1),
+                            style: Theme.of(context).textTheme.body1),
                         width: dev.screenWidth / 5),
                     padding: EdgeInsets.all(10))
               ],
@@ -91,20 +82,13 @@ class UniversalLeaderboard extends State<UniversalBoard> {
     return SliverFixedExtentList(
         itemExtent: 100,
         delegate: SliverChildBuilderDelegate(
-                (context, index) =>
-                Column(
+            (context, index) => Column(
                   children: [
                     Text("Unable to get data. Click refresh to try again.",
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .body1),
+                        style: Theme.of(context).textTheme.body1),
                     MaterialButton(
                         child: Text("Refresh",
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .button),
+                            style: Theme.of(context).textTheme.button),
                         onPressed: () {
                           setState(() {});
                         })
@@ -116,17 +100,18 @@ class UniversalLeaderboard extends State<UniversalBoard> {
 
   getOnlineScores() async {
     final databaseReference = Firestore.instance;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String prevBoard = "dgJDdOIsc70Vu2EHoDXB";//prefs.getString("onlineBoard");
-    if (prevBoard != null) {
+    if (onlineBoardID != null) {
       try {
         await databaseReference
             .collection("Leaderboard")
-            .document(prevBoard)
-            .get().then((documentSnapshot) {
-           var test = documentSnapshot["Scores"];
-           displayBoard = test;
-           print(test.length);
+            .document(onlineBoardID)
+            .get()
+            .then((documentSnapshot) {
+          displayBoard = documentSnapshot["Scores"];
+          if (displayBoard.length >= 2) {
+            displayBoard.sort((a, b) =>
+                jsonDecode(b)["score"].compareTo(jsonDecode(a)["score"]));
+          }
         });
       } catch (stacktrace) {
         print(stacktrace.toString());
