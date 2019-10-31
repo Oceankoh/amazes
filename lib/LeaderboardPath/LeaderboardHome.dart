@@ -1,5 +1,6 @@
 import 'package:aMazes/LeaderboardPath/UniversalBoard.dart';
 import 'package:aMazes/PreApp/Home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aMazes/Globals/device.dart' as dev;
@@ -101,7 +102,20 @@ class LBOptionsState extends State<SelectLeaderboard> {
                         child: Text("Create Leaderboard",
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.button),
-                        onPressed: () {})
+                        onPressed: () {
+                          final databaseReference =
+                              Firestore.instance.collection("Leaderboard");
+                          Map<String,dynamic> newMap = {"Scores": []};
+                          databaseReference.add(newMap).then((documentReference){
+                            prefs.setString("onlineBoardID", documentReference.documentID);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UniversalBoard(
+                                        isLocal: false,
+                                        boardId: documentReference.documentID)));
+                          });
+                        })
                   ],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)));
