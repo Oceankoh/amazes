@@ -62,7 +62,7 @@ class LBOptionsState extends State<SelectLeaderboard> {
     await SharedPreferences.getInstance().then((prefs) async {
       String onlineBoardID = prefs.getString("onlineBoardID");
       if (onlineBoardID != null) {
-        prefs.setString("onlineBoardID", null);
+        prefs.setString("onlineBoardID", onlineBoardID);
         Navigator.push(
             context,
             MaterialPageRoute(
