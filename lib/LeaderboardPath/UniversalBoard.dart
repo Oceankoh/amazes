@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:aMazes/LeaderboardPath/LeaderboardHome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,36 +21,40 @@ class UniversalLeaderboard extends State<UniversalBoard> {
   String onlineBoardID;
   bool isLocal;
   List<dynamic> displayBoard;
+  final _key = GlobalKey<ScaffoldState>();
 
   UniversalLeaderboard(this.onlineBoardID, this.isLocal);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _key,
         body: CustomScrollView(shrinkWrap: true, slivers: <Widget>[
-      SliverAppBar(
-          pinned: true,
-          title: Row(children: [
-            Text("Leaderboard",
-                      style: Theme.of(context).textTheme.title,
-                      textAlign: TextAlign.center),
-          ], mainAxisAlignment: MainAxisAlignment.center),
-          actions: <Widget>[IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () async {
-              await showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return dialogWidget();
-                  });
-            },
-            alignment: Alignment.centerRight,
-          ),],
-          floating: true,
-          expandedHeight: dev.screenHeight / 6,
-          flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
-      scoreList()
-    ]));
+          SliverAppBar(
+              pinned: true,
+              title: Row(children: [
+                Text("Leaderboard",
+                    style: Theme.of(context).textTheme.title,
+                    textAlign: TextAlign.center),
+              ], mainAxisAlignment: MainAxisAlignment.center),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () async {
+                    await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return dialogWidget();
+                        });
+                  },
+                  alignment: Alignment.centerRight,
+                ),
+              ],
+              floating: true,
+              expandedHeight: dev.screenHeight / 6,
+              flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
+          scoreList()
+        ]));
   }
 
   Widget scoreList() {
@@ -142,9 +147,46 @@ class UniversalLeaderboard extends State<UniversalBoard> {
       return SimpleDialog(
           children: <Widget>[
             MaterialButton(
+                child: Text("Invite Friends",
+                    style: Theme.of(context).textTheme.button),
+                onPressed: () async {
+                  await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SimpleDialog(
+                          title: Text(
+                              "Get your friends to enter this ID to join your leaderboard",
+                              style: Theme.of(context).textTheme.caption,
+                              textAlign: TextAlign.center),
+                          contentPadding: EdgeInsets.fromLTRB(24, 12, 24, 24),
+                          children: [
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                    child: Text(
+                                      onlineBoardID,
+                                      style: Theme.of(context).textTheme.body2,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    width: 210),
+                                IconButton(
+                                    icon: Icon(Icons.content_copy),
+                                    onPressed: () {
+                                      //copy leadrboard ID to clipboard
+                                      Clipboard.setData(
+                                          ClipboardData(text: onlineBoardID));
+                                    })
+                              ],
+                            )
+                          ],
+                        );
+                      });
+                }),
+            MaterialButton(
                 child: Text("Leave Leaderboard",
                     style: Theme.of(context).textTheme.button),
                 onPressed: () async {
+                  //clear boardID stored and go back to leaderboard home page
                   await SharedPreferences.getInstance().then((prefs) {
                     prefs.setString("onlineBoardID", null);
                     Navigator.pushReplacement(
@@ -152,7 +194,7 @@ class UniversalLeaderboard extends State<UniversalBoard> {
                         new MaterialPageRoute(
                             builder: (context) => SelectLeaderboard()));
                   });
-                }),
+                })
           ],
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)));
