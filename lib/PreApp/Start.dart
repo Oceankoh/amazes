@@ -23,7 +23,7 @@ class BaseApp extends StatelessWidget {
             accentTextTheme: TextTheme(body2: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
             textTheme: TextTheme(
                 headline: TextStyle(fontSize: 50, color: Colors.white,fontWeight: FontWeight.bold),
-                title: TextStyle(fontSize: 30, color: Colors.black),
+                title: TextStyle(fontSize: 25, color: Colors.black),
                 caption: TextStyle(fontSize: 20, color: Colors.white),
                 body1: TextStyle(fontSize: 20, color: Colors.white),
                 body2: TextStyle(fontSize: 5, color: Colors.white),
