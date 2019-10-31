@@ -31,19 +31,20 @@ class UniversalLeaderboard extends State<UniversalBoard> {
           pinned: true,
           title: Row(children: [
             Text("Leaderboard",
-                style: Theme.of(context).textTheme.title,
-                textAlign: TextAlign.center),
-            IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () async {
-                await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialogWidget();
-                    });
-              },
-            ),
-          ]),
+                      style: Theme.of(context).textTheme.title,
+                      textAlign: TextAlign.center),
+          ], mainAxisAlignment: MainAxisAlignment.center),
+          actions: <Widget>[IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () async {
+              await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return dialogWidget();
+                  });
+            },
+            alignment: Alignment.centerRight,
+          ),],
           floating: true,
           expandedHeight: dev.screenHeight / 6,
           flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),

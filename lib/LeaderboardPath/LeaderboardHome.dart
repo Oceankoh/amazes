@@ -91,7 +91,7 @@ class LBOptionsState extends State<SelectLeaderboard> {
                         onPressed: () {
                           prefs.setString(
                               "onlineBoardID", leaderboardController.text);
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => UniversalBoard(
