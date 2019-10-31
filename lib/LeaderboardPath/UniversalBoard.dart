@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:aMazes/LeaderboardPath/LeaderboardHome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,6 +29,21 @@ class UniversalLeaderboard extends State<UniversalBoard> {
         body: CustomScrollView(shrinkWrap: true, slivers: <Widget>[
       SliverAppBar(
           pinned: true,
+          title: Row(children: [
+            Text("Leaderboard",
+                style: Theme.of(context).textTheme.title,
+                textAlign: TextAlign.center),
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () async {
+                await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialogWidget();
+                    });
+              },
+            ),
+          ]),
           floating: true,
           expandedHeight: dev.screenHeight / 6,
           flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
@@ -80,22 +96,66 @@ class UniversalLeaderboard extends State<UniversalBoard> {
 
   Widget noData() {
     return SliverFixedExtentList(
-        itemExtent: 100,
+        itemExtent: dev.screenHeight * 3 / 4,
         delegate: SliverChildBuilderDelegate(
             (context, index) => Column(
                   children: [
-                    Text("Unable to get data. Click refresh to try again.",
-                        style: Theme.of(context).textTheme.body1),
+                    Padding(
+                        child: Text(
+                            "Unable to get data. Click refresh to try again.",
+                            style: Theme.of(context).textTheme.body1,
+                            textAlign: TextAlign.center),
+                        padding: EdgeInsets.fromLTRB(
+                            10, dev.screenHeight / 4, 0, dev.screenHeight / 4)),
                     MaterialButton(
                         child: Text("Refresh",
                             style: Theme.of(context).textTheme.button),
                         onPressed: () {
                           setState(() {});
-                        })
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)))
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
             childCount: 1));
+  }
+
+  Widget dialogWidget() {
+    if (isLocal) {
+      return SimpleDialog(
+        children: [
+          MaterialButton(
+              child: Text("Clear Leaderboard",
+                  style: Theme.of(context).textTheme.button),
+              onPressed: () async {
+                await SharedPreferences.getInstance().then((prefs) {
+                  prefs.setStringList("localBoard", []);
+                  setState(() {});
+                });
+              })
+        ],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      );
+    } else {
+      return SimpleDialog(
+          children: <Widget>[
+            MaterialButton(
+                child: Text("Leave Leaderboard",
+                    style: Theme.of(context).textTheme.button),
+                onPressed: () async {
+                  await SharedPreferences.getInstance().then((prefs) {
+                    prefs.setString("onlineBoardID", null);
+                    Navigator.pushReplacement(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => SelectLeaderboard()));
+                  });
+                }),
+          ],
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)));
+    }
   }
 
   getOnlineScores() async {
