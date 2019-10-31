@@ -75,7 +75,7 @@ class LBOptionsState extends State<SelectLeaderboard> {
             context: context,
             builder: (BuildContext context) {
               return SimpleDialog(
-                  title: Text("Join Leaderboard",
+                  title: Text("Join Online Leaderboard",
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.body1),
                   contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -85,7 +85,7 @@ class LBOptionsState extends State<SelectLeaderboard> {
                         maxLength: 20,
                         autocorrect: false),
                     MaterialButton(
-                        child: Text("Join Leaderboard",
+                        child: Text("Join",
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.button),
                         onPressed: () {
@@ -97,25 +97,32 @@ class LBOptionsState extends State<SelectLeaderboard> {
                                   builder: (context) => UniversalBoard(
                                       isLocal: false,
                                       boardId: leaderboardController.text)));
-                        }),
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
                     MaterialButton(
-                        child: Text("Create Leaderboard",
+                        child: Text("Create New",
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.button),
                         onPressed: () {
                           final databaseReference =
                               Firestore.instance.collection("Leaderboard");
-                          Map<String,dynamic> newMap = {"Scores": []};
-                          databaseReference.add(newMap).then((documentReference){
-                            prefs.setString("onlineBoardID", documentReference.documentID);
+                          Map<String, dynamic> newMap = {"Scores": []};
+                          databaseReference
+                              .add(newMap)
+                              .then((documentReference) {
+                            prefs.setString(
+                                "onlineBoardID", documentReference.documentID);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => UniversalBoard(
                                         isLocal: false,
-                                        boardId: documentReference.documentID)));
+                                        boardId:
+                                            documentReference.documentID)));
                           });
-                        })
+                        },shape:
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))
                   ],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)));
