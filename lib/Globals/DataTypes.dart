@@ -92,7 +92,6 @@ class ScoreCounter {
     double curve =
         pow(mazeSize, e) * exp(-(timeTaken).toDouble() / pow(mazeSize, e));
     _score = curve.truncate();
-    _time.reset();
   }
 
   int get score => _score;
