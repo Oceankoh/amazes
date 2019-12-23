@@ -57,6 +57,7 @@ class LoadAnimation extends StatelessWidget {
     dev.screenWidth = MediaQuery.of(context).size.width;
     dev.gameVolume = 0.5;
     dev.bgVolume = 0.5;
+    dev.playerColor=0;
     return Container(
         child: Center(
             child: Column(children: [

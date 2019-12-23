@@ -25,12 +25,15 @@ Future<AudioPlayer> control;
 const moveSound = 'movementsound';
 const completeSound = 'congratualationsaudio';
 ScoreCounter playerScore = ScoreCounter();
+List<Color> colors = [];
+
 
 class _MazeState extends State<GenerateMaze> {
   int side;
   List<List<Block>> maze;
   Coords current;
   MazeGen generator = MazeGen();
+
   final textController = TextEditingController();
 
   _MazeState(int s) {
@@ -40,6 +43,10 @@ class _MazeState extends State<GenerateMaze> {
     playerScore.timerBegin();
     maze[0][side - 1].icon = true;
     current = Coords(0, side - 1);
+    for(int i =0; i<18; i++)
+      colors.add(Colors.primaries[i][500]);
+    colors.add(Colors.white);
+    colors.add(Colors.black);
   }
 
   @override
@@ -254,7 +261,8 @@ class _MazeState extends State<GenerateMaze> {
     Color up = Colors.transparent,
         down = Colors.transparent,
         left = Colors.transparent,
-        right = Colors.transparent;
+        right = Colors.transparent,
+        player = colors[dev.playerColor];
 
     double T = 1, R = 1, B = 1, L = 1;
 
@@ -272,7 +280,7 @@ class _MazeState extends State<GenerateMaze> {
     if (maze[x][y].getIcon()) {
       ret = Container(
           decoration: BoxDecoration(
-              color: Colors.red,
+              color: player,
               border: Border(
                   top: BorderSide(width: T, color: up),
                   right: BorderSide(width: R, color: right),
