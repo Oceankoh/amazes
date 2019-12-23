@@ -32,11 +32,6 @@ class UniversalLeaderboard extends State<UniversalBoard> {
         body: CustomScrollView(shrinkWrap: true, slivers: <Widget>[
           SliverAppBar(
               pinned: true,
-              title: Row(children: [
-                Text("Leaderboard",
-                    style: Theme.of(context).textTheme.title,
-                    textAlign: TextAlign.center),
-              ], mainAxisAlignment: MainAxisAlignment.center),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.menu),
@@ -50,9 +45,11 @@ class UniversalLeaderboard extends State<UniversalBoard> {
                   alignment: Alignment.centerRight,
                 ),
               ],
-              floating: true,
+              floating: false,
               expandedHeight: dev.screenHeight / 6,
-              flexibleSpace: FlexibleSpaceBar(title: Text('Leaderboard'))),
+              flexibleSpace: FlexibleSpaceBar(centerTitle: true, title: Text("Leaderboard",
+                  style: Theme.of(context).textTheme.title,
+                  textAlign: TextAlign.center),)),
           scoreList()
         ]));
   }
@@ -141,7 +138,7 @@ class UniversalLeaderboard extends State<UniversalBoard> {
                 });
               })
         ],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
       );
     } else {
       return SimpleDialog(
@@ -158,7 +155,7 @@ class UniversalLeaderboard extends State<UniversalBoard> {
                               "Get your friends to enter this ID to join your leaderboard",
                               style: Theme.of(context).textTheme.caption,
                               textAlign: TextAlign.center),
-                          contentPadding: EdgeInsets.fromLTRB(24, 12, 24, 24),
+                          contentPadding: EdgeInsets.fromLTRB(24, 6, 24, 6),
                           children: [
                             Row(
                               children: <Widget>[
@@ -197,7 +194,7 @@ class UniversalLeaderboard extends State<UniversalBoard> {
                 })
           ],
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)));
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)));
     }
   }
 
