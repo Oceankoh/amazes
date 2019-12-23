@@ -4,3 +4,4 @@ double screenWidth;
 double screenHeight;
 double gameVolume;
 double bgVolume;
+int playerColor;
