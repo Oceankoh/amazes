@@ -1,7 +1,4 @@
-import 'dart:ui' as prefix1;
-
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter/services.dart';
 import 'package:aMazes/PreApp/Splash.dart';
 import 'dart:ui';
