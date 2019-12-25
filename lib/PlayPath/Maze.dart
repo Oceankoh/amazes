@@ -51,7 +51,7 @@ class _MazeState extends State<GenerateMaze> {
     if (maze[maze.length - 1][0].getIcon()) {
       // player has reached end
 //      control = player.play(completeSound,
-//          volume: dev.bgVolume); //start playing win audio
+//          volume: GameSettings.bgVolume); //start playing win audio
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
@@ -204,7 +204,7 @@ class _MazeState extends State<GenerateMaze> {
   }
 
   move(int direction) async {
-    //await player.play(moveSound, volume: dev.gameVolume);
+    //await player.play(moveSound, volume: GameSettings.gameVolume);
     switch (direction) {
       case 1:
         //move up(+y)
