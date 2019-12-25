@@ -4,15 +4,15 @@ import 'package:aMazes/Globals/device.dart' as dev;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:animator/animator.dart';
+import 'package:aMazes/Globals/DataTypes.dart';
 import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 AudioCache player = AudioCache();
 Future<AudioPlayer> control;
-const bgm = 'Modified2.mp3';
+const bgm = 'india.mp3';
 
 class Splash extends StatefulWidget {
   @override
@@ -20,12 +20,23 @@ class Splash extends StatefulWidget {
 }
 
 class SplashState extends State<Splash> {
-
   initSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(prefs.getStringList("localBoard")==null){
-      prefs.setStringList("localBoard", []);
-    }
+    SharedPreferences.getInstance().then((prefs) {
+      if (prefs.getStringList("localBoard") == null)
+        prefs.setStringList("localBoard", []);
+      if (prefs.getInt('playerColour') == null) prefs.setInt('playerColour', 0);
+      if (prefs.getDouble('bgVolume') == null) prefs.setDouble('bgVolume', 0.5);
+      if (prefs.getDouble('gameVolume') == null)
+        prefs.setDouble('gameVolume', 0.5);
+
+      List<Color> colours = [];
+      for (int i = 0; i < 18; i++) colours.add(Colors.primaries[i][500]);
+      colours.add(Colors.white);
+      colours.add(Colors.black);
+      GameSettings.playerColour = colours[prefs.getInt('playerColour')];
+      GameSettings.bgVolume = prefs.getDouble('bgVolume');
+      GameSettings.gameVolume = prefs.getDouble('gameVolume');
+    });
   }
 
   @override
@@ -33,7 +44,7 @@ class SplashState extends State<Splash> {
     super.initState();
     initSharedPreferences();
     Future.delayed(Duration(seconds: 3), () {
-      control = player.play(bgm, volume: dev.bgVolume);
+      control = player.play(bgm, volume: GameSettings.bgVolume);
       control.then((controller) {
         controller.setReleaseMode(ReleaseMode.LOOP);
       });
@@ -55,9 +66,6 @@ class LoadAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     dev.screenHeight = MediaQuery.of(context).size.height;
     dev.screenWidth = MediaQuery.of(context).size.width;
-    dev.gameVolume = 0.5;
-    dev.bgVolume = 0.5;
-    dev.playerColor=0;
     return Container(
         child: Center(
             child: Column(children: [

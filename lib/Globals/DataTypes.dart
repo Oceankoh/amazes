@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:core';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'DataTypes.g.dart';
@@ -121,4 +122,10 @@ class ScoreObjectList {
             .toList());
   }
 
+}
+
+class GameSettings{
+  static double gameVolume;
+  static double bgVolume;
+  static Color playerColour;
 }
