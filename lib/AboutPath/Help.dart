@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:aMazes/PreApp/Home.dart';
 import 'package:aMazes/Globals/device.dart' as dev;
+import 'package:aMazes/Globals/DataTypes.dart';
 
-class About extends StatelessWidget {
+class About extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => AboutState();
+}
+
+
+class AboutState extends State<About> with WidgetsBindingObserver{
   final String helpGame = """
 Click on the play button. 
 Select your maze size using either the slider or the manual increments beside it.
@@ -29,6 +36,39 @@ Should you choose to join another online leaderboard, you may select the leave l
 Clicking on the settings button brings allows you to configure the game settings.
 You may increase or decrease the Game music or background music by using the sliders.
 """;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.pause();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.pause();
+      });
+    }
+    if (state == AppLifecycleState.resumed) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.resume();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.resume();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

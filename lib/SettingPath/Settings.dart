@@ -8,10 +8,42 @@ class Settings extends StatefulWidget {
   State<StatefulWidget> createState() => SettingsPage();
 }
 
-class SettingsPage extends State<Settings> {
+class SettingsPage extends State<Settings> with WidgetsBindingObserver {
   double bgAudio = GameSettings.bgVolume * 100,
       gameAudio = GameSettings.gameVolume * 100;
   SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.pause();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.pause();
+      });
+    }
+    if (state == AppLifecycleState.resumed) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.resume();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.resume();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -13,7 +13,7 @@ class Splash extends StatefulWidget {
   State createState() => new SplashState();
 }
 
-class SplashState extends State<Splash> {
+class SplashState extends State<Splash> with WidgetsBindingObserver{
   initSharedPreferences() async {
     SharedPreferences.getInstance().then((prefs) {
       if (prefs.getStringList("localBoard") == null)
@@ -36,13 +36,40 @@ class SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     initSharedPreferences();
     GlobalAudioPlayer.load();
+    GlobalAudioPlayer.playBgAudio();
     Future.delayed(Duration(seconds: 3), () {
-      GlobalAudioPlayer.playBgAudio();
       Navigator.pushReplacement(
           context, new MaterialPageRoute(builder: (context) => HomePage()));
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.pause();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.pause();
+      });
+    }
+    if (state == AppLifecycleState.resumed) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.resume();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.resume();
+      });
+    }
   }
 
   @override

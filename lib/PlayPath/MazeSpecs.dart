@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aMazes/Globals/device.dart' as dev;
+import 'package:aMazes/Globals/DataTypes.dart';
 import 'package:aMazes/PlayPath/Maze.dart';
 
 int mazeSize = 15;
@@ -11,7 +12,39 @@ class Sizing extends StatefulWidget {
   State<StatefulWidget> createState() => Size();
 }
 
-class Size extends State<Sizing> {
+class Size extends State<Sizing> with WidgetsBindingObserver{
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.pause();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.pause();
+      });
+    }
+    if (state == AppLifecycleState.resumed) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.resume();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.resume();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

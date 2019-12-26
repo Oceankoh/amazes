@@ -20,14 +20,12 @@ class GenerateMaze extends StatefulWidget {
 
 ScoreCounter playerScore = ScoreCounter();
 
-class _MazeState extends State<GenerateMaze> {
+class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
   int side;
   List<List<Block>> maze;
   Coords current;
   MazeGen generator = MazeGen();
-
   Color playerColour = GameSettings.playerColour;
-
   final textController = TextEditingController();
 
   _MazeState(int s) {
@@ -37,6 +35,39 @@ class _MazeState extends State<GenerateMaze> {
     playerScore.timerBegin();
     maze[0][side - 1].icon = true;
     current = Coords(0, side - 1);
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state){
+    if(state == AppLifecycleState.paused){
+      GlobalAudioPlayer.backgroundAudio.then((controller){
+        controller.pause();
+      });
+      GlobalAudioPlayer.winAudio.then((controller){
+        controller.pause();
+      });
+    }
+    if(state == AppLifecycleState.resumed){
+      GlobalAudioPlayer.backgroundAudio.then((controller){
+        controller.resume();
+      });
+      GlobalAudioPlayer.winAudio.then((controller){
+        controller.resume();
+      });
+    }
   }
 
   @override
@@ -306,9 +337,4 @@ class _MazeState extends State<GenerateMaze> {
     return ret;
   }
 
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
-  }
 }
