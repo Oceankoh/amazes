@@ -1,6 +1,5 @@
 import 'package:aMazes/Globals/DataTypes.dart';
 import 'package:flutter/material.dart';
-import 'package:aMazes/PreApp/Splash.dart';
 import 'package:aMazes/Globals/device.dart' as dev;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,7 +37,7 @@ class SettingsPage extends State<Settings> {
                 setState(() {
                   bgAudio = value;
                   GameSettings.bgVolume = bgAudio / 100;
-                  control.then((controller) {
+                  GlobalAudioPlayer.backgroundAudio.then((controller) {
                     controller.setVolume(GameSettings.bgVolume);
                   });
                 });

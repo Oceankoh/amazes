@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aMazes/PreApp/Home.dart';
 import 'package:aMazes/Globals/device.dart' as dev;
-import 'package:audioplayers/audioplayers.dart';
-import 'package:audioplayers/audio_cache.dart';
 import 'package:animator/animator.dart';
 import 'package:aMazes/Globals/DataTypes.dart';
 import 'dart:math';
@@ -10,9 +8,6 @@ import 'dart:ui';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
-AudioCache player = AudioCache();
-Future<AudioPlayer> control;
-const bgm = 'Modified21.mp3';
 
 class Splash extends StatefulWidget {
   @override
@@ -43,11 +38,9 @@ class SplashState extends State<Splash> {
   void initState() {
     super.initState();
     initSharedPreferences();
+    GlobalAudioPlayer.load();
     Future.delayed(Duration(seconds: 3), () {
-      control = player.play(bgm, volume: GameSettings.bgVolume);
-      control.then((controller) {
-        controller.setReleaseMode(ReleaseMode.LOOP);
-      });
+      GlobalAudioPlayer.playBgAudio();
       Navigator.pushReplacement(
           context, new MaterialPageRoute(builder: (context) => HomePage()));
     });
