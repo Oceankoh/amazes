@@ -9,7 +9,8 @@ class Settings extends StatefulWidget {
 }
 
 class SettingsPage extends State<Settings> {
-  double bgAudio = GameSettings.bgVolume * 100, gameAudio = GameSettings.gameVolume * 100;
+  double bgAudio = GameSettings.bgVolume * 100,
+      gameAudio = GameSettings.gameVolume * 100;
   SharedPreferences prefs;
 
   @override
