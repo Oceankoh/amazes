@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:core';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -84,7 +85,7 @@ class ScoreCounter {
     _time.stop();
   }
 
-  timerReset(){
+  timerReset() {
     _time.reset();
   }
 
@@ -102,6 +103,7 @@ class ScoreCounter {
 class ScoreObject {
   final String username;
   final int score;
+
   ScoreObject({this.username, this.score});
 
   factory ScoreObject.fromJson(Map<String, dynamic> json) =>
@@ -110,22 +112,26 @@ class ScoreObject {
   Map<String, dynamic> toJson() => _$ScoreObjectToJson(this);
 }
 
-//TODO: determine if need to be removed
-class ScoreObjectList {
-  final List<ScoreObject> scores;
-  ScoreObjectList({this.scores});
-
-  factory ScoreObjectList.fromJson(List<dynamic> json) {
-    return ScoreObjectList(
-        scores: json
-            .map((e) => ScoreObject.fromJson(e as Map<String, dynamic>))
-            .toList());
-  }
-
-}
-
-class GameSettings{
+class GameSettings {
   static double gameVolume;
   static double bgVolume;
   static Color playerColour;
+}
+
+class GlobalAudioPlayer {
+  static AudioCache _player = AudioCache();
+  static var backgroundAudio;
+  static var gameAudio;
+
+  static void load() {
+    _player.loadAll(['background.mp3', 'game.mp3']);
+  }
+
+  static void playBgAudio() {
+    backgroundAudio = _player.loop('background.mp3', volume: GameSettings.bgVolume);
+  }
+
+  static void playGameAudio() {
+    gameAudio = _player.play('game.mp3', volume: GameSettings.gameVolume);
+  }
 }
