@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aMazes/Globals/device.dart' as dev;
+import 'package:aMazes/Globals/DataTypes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectLeaderboard extends StatefulWidget {
@@ -11,7 +12,39 @@ class SelectLeaderboard extends StatefulWidget {
   State<StatefulWidget> createState() => LBOptionsState();
 }
 
-class LBOptionsState extends State<SelectLeaderboard> {
+class LBOptionsState extends State<SelectLeaderboard> with WidgetsBindingObserver{
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.pause();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.pause();
+      });
+    }
+    if (state == AppLifecycleState.resumed) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.resume();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.resume();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

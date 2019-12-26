@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aMazes/Globals/device.dart' as dev;
+import 'package:aMazes/Globals/DataTypes.dart';
 
 class UniversalBoard extends StatefulWidget {
   final String boardId;
@@ -17,13 +18,45 @@ class UniversalBoard extends StatefulWidget {
   State createState() => UniversalLeaderboard(boardId, isLocal);
 }
 
-class UniversalLeaderboard extends State<UniversalBoard> {
+class UniversalLeaderboard extends State<UniversalBoard> with WidgetsBindingObserver{
   String onlineBoardID;
   bool isLocal;
   List<dynamic> displayBoard;
   final _key = GlobalKey<ScaffoldState>();
 
   UniversalLeaderboard(this.onlineBoardID, this.isLocal);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.pause();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.pause();
+      });
+    }
+    if (state == AppLifecycleState.resumed) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.resume();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.resume();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

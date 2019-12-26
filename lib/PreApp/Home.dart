@@ -1,4 +1,5 @@
 import 'package:aMazes/LeaderboardPath/LeaderboardHome.dart';
+import 'package:aMazes/Globals/DataTypes.dart';
 import 'package:flutter/material.dart';
 import 'package:aMazes/PlayPath/MazeSpecs.dart';
 import 'package:aMazes/AboutPath/Help.dart';
@@ -13,7 +14,39 @@ class HomePage extends StatefulWidget {
   State createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> with WidgetsBindingObserver{
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.pause();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.pause();
+      });
+    }
+    if (state == AppLifecycleState.resumed) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
+        controller.resume();
+      });
+      GlobalAudioPlayer.winAudio.then((controller) {
+        controller.resume();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
