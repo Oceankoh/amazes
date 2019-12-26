@@ -121,17 +121,22 @@ class GameSettings {
 class GlobalAudioPlayer {
   static AudioCache _player = AudioCache();
   static var backgroundAudio;
-  static var gameAudio;
+  static var moveAudio;
+  static var winAudio;
 
   static void load() {
-    _player.loadAll(['background.mp3', 'game.mp3']);
+    _player.loadAll(['background.mp3', 'move.mp3', 'win.mp3']);
   }
 
   static void playBgAudio() {
     backgroundAudio = _player.loop('background.mp3', volume: GameSettings.bgVolume);
   }
 
-  static void playGameAudio() {
-    gameAudio = _player.play('game.mp3', volume: GameSettings.gameVolume);
+  static void playMoveAudio() {
+    moveAudio = _player.play('move.mp3', volume: GameSettings.gameVolume);
+  }
+
+  static void playWinAudio(){
+    winAudio = _player.play('win.mp3', volume: GameSettings.gameVolume);
   }
 }

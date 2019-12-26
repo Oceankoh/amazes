@@ -3,8 +3,7 @@ import 'package:aMazes/PreApp/Home.dart';
 import 'package:aMazes/Globals/device.dart' as dev;
 
 class About extends StatelessWidget {
-  @override
-  String helpGame = """
+  final String helpGame = """
 Click on the play button. 
 Select your maze size using either the slider or the manual increments beside it.
 Once selected press confirm.
@@ -16,7 +15,7 @@ Your score will be calculated according to your specified size and time taken to
 After reaching the end, you will be greeted with a winning screen to save your score.
 Enter your name into the textfield to save your score on the leaderboards.
 """;
-  String helpLeaderboard = """
+  final String helpLeaderboard = """
 You can check the leaderboard by pressing the leaderboards button.
 You can then choose to view either the local leaderboard or an online leaderboard.
 Your score is automatically saved to the local leaderboard. You may clear the scores at any time by simply clicking on the clear leaderboard button.
@@ -26,11 +25,11 @@ To connect to a new leaderboard, you may either enter the leaderboard ID of an e
 Once your board has been created you may share the boardID with your friends and compete for the top position.
 Should you choose to join another online leaderboard, you may select the leave leaderboard option.
 """;
-  String helpSettings = """
+  final String helpSettings = """
 Clicking on the settings button brings allows you to configure the game settings.
 You may increase or decrease the Game music or background music by using the sliders.
 """;
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(

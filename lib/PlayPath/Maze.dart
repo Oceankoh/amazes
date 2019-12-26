@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:audioplayers/audio_cache.dart';
 import 'package:aMazes/PlayPath/MazeGenAlgo.dart';
 import 'package:aMazes/Globals/DataTypes.dart';
 import 'package:aMazes/PreApp/Home.dart';
@@ -20,10 +18,6 @@ class GenerateMaze extends StatefulWidget {
   State createState() => _MazeState(side);
 }
 
-AudioCache player = AudioCache();
-Future<AudioPlayer> control;
-const moveSound = 'movementsound';
-const completeSound = 'congratualationsaudio';
 ScoreCounter playerScore = ScoreCounter();
 
 
@@ -50,8 +44,7 @@ class _MazeState extends State<GenerateMaze> {
   Widget build(BuildContext context) {
     if (maze[maze.length - 1][0].getIcon()) {
       // player has reached end
-//      control = player.play(completeSound,
-//          volume: GameSettings.bgVolume); //start playing win audio
+      GlobalAudioPlayer.playWinAudio();
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
@@ -204,7 +197,7 @@ class _MazeState extends State<GenerateMaze> {
   }
 
   move(int direction) async {
-    //await player.play(moveSound, volume: GameSettings.gameVolume);
+    GlobalAudioPlayer.playMoveAudio();
     switch (direction) {
       case 1:
         //move up(+y)
