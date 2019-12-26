@@ -8,7 +8,6 @@ import 'dart:ui';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class Splash extends StatefulWidget {
   @override
   State createState() => new SplashState();

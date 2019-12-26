@@ -20,7 +20,6 @@ class GenerateMaze extends StatefulWidget {
 
 ScoreCounter playerScore = ScoreCounter();
 
-
 class _MazeState extends State<GenerateMaze> {
   int side;
   List<List<Block>> maze;
