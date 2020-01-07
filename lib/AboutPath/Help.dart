@@ -8,7 +8,7 @@ class About extends StatefulWidget {
   State<StatefulWidget> createState() => AboutState();
 }
 
-
+//TODO update help page
 class AboutState extends State<About> with WidgetsBindingObserver{
   final String helpGame = """
 Click on the play button. 
