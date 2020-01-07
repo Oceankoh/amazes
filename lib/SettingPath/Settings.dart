@@ -73,6 +73,9 @@ class SettingsPage extends State<Settings> with WidgetsBindingObserver {
                   GlobalAudioPlayer.backgroundAudio.then((controller) {
                     controller.setVolume(GameSettings.bgVolume);
                   });
+                  SharedPreferences.getInstance().then((prefs) {
+                    prefs.setDouble('bgVolume', GameSettings.bgVolume);
+                  });
                 });
               },
               min: 0,
@@ -92,6 +95,9 @@ class SettingsPage extends State<Settings> with WidgetsBindingObserver {
                     setState(() {
                       gameAudio = value;
                       GameSettings.gameVolume = gameAudio / 100;
+                      SharedPreferences.getInstance().then((prefs) {
+                        prefs.setDouble('gameVolume', GameSettings.gameVolume);
+                      });
                     });
                   },
                   min: 0,

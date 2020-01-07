@@ -39,8 +39,8 @@ class SplashState extends State<Splash> with WidgetsBindingObserver{
     WidgetsBinding.instance.addObserver(this);
     initSharedPreferences();
     GlobalAudioPlayer.load();
-    GlobalAudioPlayer.playBgAudio();
     Future.delayed(Duration(seconds: 3), () {
+      GlobalAudioPlayer.playBgAudio();
       Navigator.pushReplacement(
           context, new MaterialPageRoute(builder: (context) => HomePage()));
     });
@@ -64,9 +64,6 @@ class SplashState extends State<Splash> with WidgetsBindingObserver{
     }
     if (state == AppLifecycleState.resumed) {
       GlobalAudioPlayer.backgroundAudio.then((controller) {
-        controller.resume();
-      });
-      GlobalAudioPlayer.winAudio.then((controller) {
         controller.resume();
       });
     }
