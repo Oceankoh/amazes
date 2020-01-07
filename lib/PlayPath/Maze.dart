@@ -23,7 +23,7 @@ ScoreCounter playerScore = ScoreCounter();
 class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
   int side;
   List<List<Block>> maze;
-  Coords current;
+  Coordinates current;
   MazeGen generator = MazeGen();
   Color playerColour = GameSettings.playerColour;
   final textController = TextEditingController();
@@ -34,7 +34,7 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
     playerScore.timerReset(); //ensure timer starts from 0 all the time
     playerScore.timerBegin();
     maze[0][side - 1].icon = true;
-    current = Coords(0, side - 1);
+    current = Coordinates(0, side - 1);
   }
 
   @override

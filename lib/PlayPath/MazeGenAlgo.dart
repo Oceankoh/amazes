@@ -5,7 +5,7 @@ import 'package:aMazes/Globals/DataTypes.dart';
 class MazeGen {
   //variables
   List<List<Block>> maze = [];
-  Queue<Coords> visited = new Queue<Coords>();
+  Queue<Coordinates> visited = new Queue<Coordinates>();
   int size;
 
   List<List<Block>> generate(int s) {
@@ -20,11 +20,11 @@ class MazeGen {
     var rnd = Random();
     int xStart = rnd.nextInt(size);
     int yStart = rnd.nextInt(size);
-    algo(Coords(xStart, yStart));
+    algo(Coordinates(xStart, yStart));
     return maze;
   }
 
-  void algo(Coords coordinates) {
+  void algo(Coordinates coordinates) {
     int x = coordinates.getX();
     int y = coordinates.getY();
 
@@ -69,30 +69,30 @@ class MazeGen {
         case 1: //up
           maze[x][y].up = false;
           maze[x][y + 1].down = false;
-          visited.add(Coords(x, y));
-          algo(Coords(x, y + 1));
+          visited.add(Coordinates(x, y));
+          algo(Coordinates(x, y + 1));
           break;
         case 2: //right
           maze[x][y].right = false;
           maze[x + 1][y].left = false;
-          visited.add(Coords(x, y));
-          algo(Coords(x + 1, y));
+          visited.add(Coordinates(x, y));
+          algo(Coordinates(x + 1, y));
           break;
         case 3: //down
           maze[x][y].down = false;
           maze[x][y - 1].up = false;
-          visited.add(Coords(x, y));
-          algo(Coords(x, y - 1));
+          visited.add(Coordinates(x, y));
+          algo(Coordinates(x, y - 1));
           break;
         case 4: //left
           maze[x][y].left = false;
           maze[x - 1][y].right = false;
-          visited.add(Coords(x, y));
-          algo(Coords(x - 1, y));
+          visited.add(Coordinates(x, y));
+          algo(Coordinates(x - 1, y));
           break;
       }
     } else if (visited.isNotEmpty) {
-      Coords prev = visited.removeLast();
+      Coordinates prev = visited.removeLast();
       algo(prev);
     }
   }
