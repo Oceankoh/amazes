@@ -12,7 +12,8 @@ class SelectLeaderboard extends StatefulWidget {
   State<StatefulWidget> createState() => LBOptionsState();
 }
 
-class LBOptionsState extends State<SelectLeaderboard> with WidgetsBindingObserver{
+class LBOptionsState extends State<SelectLeaderboard>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -32,14 +33,11 @@ class LBOptionsState extends State<SelectLeaderboard> with WidgetsBindingObserve
         controller.pause();
       });
       GlobalAudioPlayer.winAudio.then((controller) {
-        controller.pause();
+        controller.release();
       });
     }
     if (state == AppLifecycleState.resumed) {
       GlobalAudioPlayer.backgroundAudio.then((controller) {
-        controller.resume();
-      });
-      GlobalAudioPlayer.winAudio.then((controller) {
         controller.resume();
       });
     }
@@ -56,6 +54,7 @@ class LBOptionsState extends State<SelectLeaderboard> with WidgetsBindingObserve
                   child: Text('Local Leaderboard',
                       style: Theme.of(context).textTheme.button),
                   onPressed: () {
+                    //load the leaderboard view
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -81,6 +80,7 @@ class LBOptionsState extends State<SelectLeaderboard> with WidgetsBindingObserve
                   child:
                       Text('Back', style: Theme.of(context).textTheme.button),
                   onPressed: () {
+                    //return to the home page
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   },
@@ -91,21 +91,28 @@ class LBOptionsState extends State<SelectLeaderboard> with WidgetsBindingObserve
     ]));
   }
 
+  //Viewing online leaderboard requires async transaction
   joinLeaderboard() async {
+    //asynchronous operation to access stored credentials
     await SharedPreferences.getInstance().then((prefs) async {
+      //access id of previously joined leaderboard if exists
       String onlineBoardID = prefs.getString("onlineBoardID");
+      //user has previously joined board
       if (onlineBoardID != null) {
-        prefs.setString("onlineBoardID", onlineBoardID);
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
                     UniversalBoard(isLocal: false, boardId: onlineBoardID)));
       } else {
+        //user does not have a previously joined board
         print("boardID is null");
+        //Object to control user input from text field
         final leaderboardController = TextEditingController();
+        //show options to join or create new online leaderboard
         await showDialog(
             context: context,
+            //create dialog popup with necessary options
             builder: (BuildContext context) {
               return SimpleDialog(
                   title: Text("Join Online Leaderboard",
@@ -122,8 +129,10 @@ class LBOptionsState extends State<SelectLeaderboard> with WidgetsBindingObserve
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.button),
                         onPressed: () {
+                          //save the boardID entered by the user auto-join on next viewing
                           prefs.setString(
                               "onlineBoardID", leaderboardController.text);
+                          //load the leaderboard view
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -137,15 +146,19 @@ class LBOptionsState extends State<SelectLeaderboard> with WidgetsBindingObserve
                         child: Text("Create New",
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.button),
+                        //create and initialise instance of online leaderboard
                         onPressed: () {
-                          final databaseReference =
-                              Firestore.instance.collection("Leaderboard");
+                          //empty map used to initialise database
                           Map<String, dynamic> newMap = {"Scores": []};
-                          databaseReference
+                          //create new board instance
+                          Firestore.instance
+                              .collection("Leaderboard")
                               .add(newMap)
                               .then((documentReference) {
+                            //store the boardID for auto-login on next viewing
                             prefs.setString(
                                 "onlineBoardID", documentReference.documentID);
+                            //load the leaderboard view
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -154,8 +167,9 @@ class LBOptionsState extends State<SelectLeaderboard> with WidgetsBindingObserve
                                         boardId:
                                             documentReference.documentID)));
                           });
-                        },shape:
-                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)))
                   ],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)));

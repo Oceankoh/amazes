@@ -57,14 +57,11 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
         controller.pause();
       });
       GlobalAudioPlayer.winAudio.then((controller){
-        controller.pause();
+        controller.release();
       });
     }
     if(state == AppLifecycleState.resumed){
       GlobalAudioPlayer.backgroundAudio.then((controller){
-        controller.resume();
-      });
-      GlobalAudioPlayer.winAudio.then((controller){
         controller.resume();
       });
     }
@@ -209,7 +206,7 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
   saveScore(String username, int score) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> leaderBoard = prefs.getStringList("localBoard");
-    ScoreObject newScore = new ScoreObject(username: username, score: score);
+    ScoreObject newScore = new ScoreObject(username, score);
     leaderBoard.add(jsonEncode(newScore));
     if (leaderBoard.length >= 2)
       leaderBoard.sort((a, b) => jsonDecode(b)["score"]

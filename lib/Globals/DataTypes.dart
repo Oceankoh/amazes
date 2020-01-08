@@ -131,7 +131,7 @@ class ScoreObject {
   final int score;
 
   //constructor for each instance of ScoreObject
-  ScoreObject({this.username, this.score});
+  ScoreObject(this.username, this.score);
 
   //decoding json into ScoreObject
   factory ScoreObject.fromJson(Map<String, dynamic> json) =>

@@ -32,14 +32,11 @@ class SettingsPage extends State<Settings> with WidgetsBindingObserver {
         controller.pause();
       });
       GlobalAudioPlayer.winAudio.then((controller) {
-        controller.pause();
+        controller.release();
       });
     }
     if (state == AppLifecycleState.resumed) {
       GlobalAudioPlayer.backgroundAudio.then((controller) {
-        controller.resume();
-      });
-      GlobalAudioPlayer.winAudio.then((controller) {
         controller.resume();
       });
     }

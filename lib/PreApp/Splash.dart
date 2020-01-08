@@ -59,7 +59,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver{
         controller.pause();
       });
       GlobalAudioPlayer.winAudio.then((controller) {
-        controller.pause();
+        controller.release();
       });
     }
     if (state == AppLifecycleState.resumed) {

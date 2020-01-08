@@ -7,8 +7,7 @@ part of 'DataTypes.dart';
 // **************************************************************************
 
 ScoreObject _$ScoreObjectFromJson(Map<String, dynamic> json) {
-  return ScoreObject(
-      username: json['username'] as String, score: json['score'] as int);
+  return ScoreObject(json['username'] as String, json['score'] as int);
 }
 
 Map<String, dynamic> _$ScoreObjectToJson(ScoreObject instance) =>

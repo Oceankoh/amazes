@@ -56,14 +56,11 @@ You may increase or decrease the Game music or background music by using the sli
         controller.pause();
       });
       GlobalAudioPlayer.winAudio.then((controller) {
-        controller.pause();
+        controller.release();
       });
     }
     if (state == AppLifecycleState.resumed) {
       GlobalAudioPlayer.backgroundAudio.then((controller) {
-        controller.resume();
-      });
-      GlobalAudioPlayer.winAudio.then((controller) {
         controller.resume();
       });
     }
