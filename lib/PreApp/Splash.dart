@@ -13,56 +13,51 @@ class Splash extends StatefulWidget {
   State createState() => new SplashState();
 }
 
-class SplashState extends State<Splash> with WidgetsBindingObserver{
-  initSharedPreferences() async {
-    SharedPreferences.getInstance().then((prefs) {
-      if (prefs.getStringList("localBoard") == null)
-        prefs.setStringList("localBoard", []);
-      if (prefs.getInt('playerColour') == null) prefs.setInt('playerColour', 0);
-      if (prefs.getDouble('bgVolume') == null) prefs.setDouble('bgVolume', 0.5);
-      if (prefs.getDouble('gameVolume') == null)
-        prefs.setDouble('gameVolume', 0.5);
-
-      List<Color> colours = [];
-      for (int i = 0; i < 18; i++) colours.add(Colors.primaries[i][500]);
-      colours.add(Colors.white);
-      colours.add(Colors.black);
-      GameSettings.playerColour = colours[prefs.getInt('playerColour')];
-      GameSettings.bgVolume = prefs.getDouble('bgVolume');
-      GameSettings.gameVolume = prefs.getDouble('gameVolume');
-    });
-  }
-
+class SplashState extends State<Splash> with WidgetsBindingObserver {
   @override
   void initState() {
+    //call original init state functions
     super.initState();
+    //add listener for change in state of app lifecycle
     WidgetsBinding.instance.addObserver(this);
+    //initialise data stored in Sharedpreferences
     initSharedPreferences();
+    //load the audio assets into the Audio Cache
     GlobalAudioPlayer.load();
+    //Fixed delay to account for runtime of operations
     Future.delayed(Duration(seconds: 3), () {
+      //Play background audio
       GlobalAudioPlayer.playBgAudio();
+      //Navigate to the home screen of the app
       Navigator.pushReplacement(
-          context, new MaterialPageRoute(builder: (context) => HomePage()));
+          context, MaterialPageRoute(builder: (context) => HomePage()));
     });
   }
 
   @override
   void dispose() {
+    //call original dispose functions
     super.dispose();
+    //remove the listener for change in state of app lifecycle
     WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    //check if app is in paused state
     if (state == AppLifecycleState.paused) {
+      //pause the background audio
       GlobalAudioPlayer.backgroundAudio.then((controller) {
         controller.pause();
       });
+      //stop the win audio, since the entire clip is too short and insignificant to pause
       GlobalAudioPlayer.winAudio.then((controller) {
         controller.release();
       });
     }
+    //check if the app is in the resumed state
     if (state == AppLifecycleState.resumed) {
+      //resume the background audio
       GlobalAudioPlayer.backgroundAudio.then((controller) {
         controller.resume();
       });
@@ -71,15 +66,42 @@ class SplashState extends State<Splash> with WidgetsBindingObserver{
 
   @override
   Widget build(BuildContext context) {
+    //return a loading animation
     return Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         body: Center(key: UniqueKey(), child: LoadAnimation()));
+  }
+
+  //method to initialise data stored in the Sharedpreferences
+  initSharedPreferences() async {
+    //retrieve instance of Sharedpreferences
+    SharedPreferences.getInstance().then((prefs) {
+      //if variable did not exist previously, create it and initialise to default value
+      if (prefs.getStringList("localBoard") == null)
+        prefs.setStringList("localBoard", []);
+      if (prefs.getInt('playerColour') == null) prefs.setInt('playerColour', 0);
+      if (prefs.getDouble('bgVolume') == null) prefs.setDouble('bgVolume', 0.5);
+      if (prefs.getDouble('gameVolume') == null)
+        prefs.setDouble('gameVolume', 0.5);
+
+      //create the color palette which the player can choose their player color from
+      List<Color> colours = [];
+      for (int i = 0; i < 18; i++) colours.add(Colors.primaries[i][500]);
+      colours.add(Colors.white);
+      colours.add(Colors.black);
+
+      //implement default/previous settings configured on last open
+      GameSettings.playerColour = colours[prefs.getInt('playerColour')];
+      GameSettings.bgVolume = prefs.getDouble('bgVolume');
+      GameSettings.gameVolume = prefs.getDouble('gameVolume');
+    });
   }
 }
 
 class LoadAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //retrieve values of the device screen used to build the GUIs of the app
     dev.screenHeight = MediaQuery.of(context).size.height;
     dev.screenWidth = MediaQuery.of(context).size.width;
     return Container(
