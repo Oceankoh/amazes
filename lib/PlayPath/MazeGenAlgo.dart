@@ -3,13 +3,18 @@ import 'dart:collection';
 import 'package:aMazes/Globals/DataTypes.dart';
 
 class MazeGen {
-  //variables
+  //2 dimensional grid of object Block
   List<List<Block>> maze = [];
-  Queue<Coordinates> visited = new Queue<Coordinates>();
+  //queue to store previously visited since stack data structure is not available
+  Queue<Coordinates> visited = Queue<Coordinates>();
+  //size of maze to be generated
   int size;
 
+  //maze generation method
   List<List<Block>> generate(int s) {
+    //save maze size for future usage outside the method
     this.size = s;
+    //nested loops to initialise entire grid with a new instance of Block
     for (int i = 0; i < size; i++) {
       List<Block> init = [];
       for (int j = 0; j < size; j++) {
@@ -17,21 +22,29 @@ class MazeGen {
       }
       maze.add(init);
     }
+    //random object used to generate random numbers
     var rnd = Random();
+    //randomise the starting position of the DFS algorithm
     int xStart = rnd.nextInt(size);
     int yStart = rnd.nextInt(size);
+    //recursive DFS starting at the randomised coordinates
     algo(Coordinates(xStart, yStart));
+    //return the generated maze
     return maze;
   }
 
+  //DFS algorithm to generate maze
   void algo(Coordinates coordinates) {
+    //current coordinates of the algorithm
     int x = coordinates.getX();
     int y = coordinates.getY();
 
-    //mark current as visited
+    //mark current node as visited
     maze[x][y].visited = true;
 
+    //marked true if there is unvisited node
     bool unvisited = false;
+    //list used to randomize which node to pick by shuffling
     List<int> randomizer = [];
 
     //check for adjacent visited nodes
@@ -63,7 +76,18 @@ class MazeGen {
         randomizer.add(4);
       }
     }
+
+    //check if there are unvisited nodes
     if (unvisited && randomizer.length > 0) {
+      /*
+      unvisited nodes exists
+      +======================================================================+
+      |   1. shuffle the list of unvisited nodes and pick the top element    |
+      |   2. increment/decrement the coordinates accordingly
+          3. add the node to the "stack"
+      |   3. run algo with the new coordinates                               |
+      +======================================================================+
+       */
       randomizer.shuffle(Random());
       switch (randomizer[0]) {
         case 1: //up
@@ -92,6 +116,13 @@ class MazeGen {
           break;
       }
     } else if (visited.isNotEmpty) {
+      /*
+      all adjacent nodes are visited already
+      +=====================================================================+
+      |   1. pop the previous node off the stack                            |
+      |   2. run algo at the previous node                                  |
+      +=====================================================================+
+       */
       Coordinates prev = visited.removeLast();
       algo(prev);
     }

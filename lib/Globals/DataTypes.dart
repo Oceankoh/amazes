@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'DataTypes.g.dart';
 
-//Represents each square/block in the grid maze
+//Represents each square/block in the grid maze with all configurable parameters
 class Block {
   //private booleans up/down/left/right to represent whether the wall exists
   bool _up = true;

@@ -20,25 +20,42 @@ class GenerateMaze extends StatefulWidget {
 
 ScoreCounter playerScore = ScoreCounter();
 
-class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
+class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver {
+  //length of one side square grid of the maze
   int side;
+
+  //2 dimensional array to represent the maze grid
   List<List<Block>> maze;
+
+  //coordinates of the current location of the player in the maze
   Coordinates current;
+
+  //maze generator object
   MazeGen generator = MazeGen();
+
+  //Color of the player icon
   Color playerColour = GameSettings.playerColour;
+
+  //Object to control the text field receiving input for the player username
   final textController = TextEditingController();
 
+  //initialisation of maze state
   _MazeState(int s) {
+    //storing the specified maze size for usage later
     side = s;
+    //DFS generation of maze
     maze = generator.generate(side);
-    playerScore.timerReset(); //ensure timer starts from 0 all the time
-    playerScore.timerBegin();
+    //reset the previous timer instance to ensure it starts from 0
+    playerScore.timerReset();
+    //start the player at the top left corner
     maze[0][side - 1].icon = true;
     current = Coordinates(0, side - 1);
+    //start the timer
+    playerScore.timerBegin();
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -51,17 +68,17 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state){
-    if(state == AppLifecycleState.paused){
-      GlobalAudioPlayer.backgroundAudio.then((controller){
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
         controller.pause();
       });
-      GlobalAudioPlayer.winAudio.then((controller){
+      GlobalAudioPlayer.winAudio.then((controller) {
         controller.release();
       });
     }
-    if(state == AppLifecycleState.resumed){
-      GlobalAudioPlayer.backgroundAudio.then((controller){
+    if (state == AppLifecycleState.resumed) {
+      GlobalAudioPlayer.backgroundAudio.then((controller) {
         controller.resume();
       });
     }
@@ -69,12 +86,16 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
 
   @override
   Widget build(BuildContext context) {
+    //check if player has reached the bottom right corner
     if (maze[maze.length - 1][0].getIcon()) {
       // player has reached end
+      //play congratulatory audio
       GlobalAudioPlayer.playWinAudio();
+      //stop the timer and calculate the score using the total time taken
       playerScore.timerEnd();
       playerScore.calculate(side);
       int finalScore = playerScore.score;
+      //show win screen instead of maze
       return Scaffold(
           body: Column(children: [
         Center(
@@ -124,7 +145,7 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
             padding: EdgeInsets.all(20))
       ], mainAxisAlignment: MainAxisAlignment.center));
     } else {
-      //player still in the middle of the maze
+      //maze completion in progress
       return Scaffold(
           body: Stack(children: [
         Container(
@@ -132,8 +153,10 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
             padding: EdgeInsets.all(5),
             child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    //set length of grid as specified by the user
                     crossAxisCount: side),
                 scrollDirection: Axis.vertical,
+                //method loops through entire 2D grid linearly to generate maze
                 itemBuilder: drawMaze,
                 itemCount: side * side)),
         Column(
@@ -203,6 +226,7 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
     }
   }
 
+
   saveScore(String username, int score) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> leaderBoard = prefs.getStringList("localBoard");
@@ -223,8 +247,18 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
     }
   }
 
-  move(int direction) async {
+    move(int direction) async {
+    //play the movement audio
     GlobalAudioPlayer.playMoveAudio();
+    /*
+    +========================================================================+
+    |   To move a player,                                                    |
+    |     1. check if move is valid                                          |
+    |     2. change the player icon to be generated at next cell             |
+    |     3. increment/decrement the coordinate according to the movement    |
+    |     4. rebuild the maze GUI                                            |
+    +========================================================================+
+     */
     switch (direction) {
       case 1:
         //move up(+y)
@@ -264,35 +298,53 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
     }
   }
 
+
   Widget drawMaze(BuildContext context, int index) {
     int x = 0, y = 0;
+    /*
+      convert the linear index into x, y coordinates
+    +===============================================+
+    |           258  ->  (0,2)(1,2)(2,2)            |
+    |           147  ->  (0,1)(1,1)(2,1)            |
+    |           036  ->  (0,0)(1,0)(2,0)            |
+    +===============================================+
+    */
     x = (index / side).floor();
     y = (index % side);
+    //return a GridTile Widget base on 2D maze grid
     return GridTile(
       child: drawGridCell(y, side - 1 - x),
     );
   }
 
+  //generate grid cell base on maze specs
   Widget drawGridCell(int x, y) {
+    //set all 4 walls of the cell to be transparent
     Color up = Colors.transparent,
         down = Colors.transparent,
         left = Colors.transparent,
         right = Colors.transparent;
 
+    //set all wall thickness to be size 1
     double T = 1, R = 1, B = 1, L = 1;
 
+    //ensure 2 adjacent cells do not construct
     if (x == 0) L = 2;
     if (x == maze.length - 1) R = 2;
     if (y == 0) B = 2;
     if (y == maze.length - 1) T = 2;
-
+    //blank container to be returned
     Container ret;
+
+    //set color of the walls to be "drawn" to white
     if (maze[x][y].getUp()) up = Colors.white;
     if (maze[x][y].getRight()) right = Colors.white;
     if (maze[x][y].getDown()) down = Colors.white;
     if (maze[x][y].getLeft()) left = Colors.white;
 
+    //check if player is at the node to be generated
     if (maze[x][y].getIcon()) {
+      //current node contains the player, hence return a coloured node
       ret = Container(
           decoration: BoxDecoration(
               color: playerColour,
@@ -302,6 +354,7 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
                   bottom: BorderSide(width: B, color: down),
                   left: BorderSide(width: L, color: left))));
     } else if (x == 0 && y == maze.length - 1) {
+      //current node is the top left corner, return icon to indicate start of the maze
       ret = Container(
           child: Icon(MdiIcons.arrowBottomRightBoldOutline,
               color: Colors.white, size: dev.screenWidth / (2 * side)),
@@ -312,6 +365,7 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
                   bottom: BorderSide(width: B, color: down),
                   left: BorderSide(width: L, color: left))));
     } else if (x == maze.length - 1 && y == 0) {
+      //current node the bottom right corner, return icon to indicate the end
       ret = Container(
           child: Icon(MdiIcons.starCircleOutline,
               color: Colors.white, size: dev.screenWidth / (2 * side)),
@@ -322,6 +376,7 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
                   bottom: BorderSide(width: B, color: down),
                   left: BorderSide(width: L, color: left))));
     } else {
+      //current node does not fulfill any of the conditions above, return normal node according to cell specifications
       ret = Container(
           decoration: BoxDecoration(
               border: Border(
@@ -330,8 +385,6 @@ class _MazeState extends State<GenerateMaze> with WidgetsBindingObserver{
                   bottom: BorderSide(width: B, color: down),
                   left: BorderSide(width: L, color: left))));
     }
-
     return ret;
   }
-
 }
