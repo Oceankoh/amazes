@@ -56,8 +56,6 @@ class Block {
   set visited(bool value) {
     _visited = value;
   }
-
-
 }
 
 //Pair object used to store x,y coordinates in the grid maze

@@ -3,16 +3,16 @@ import 'dart:collection';
 import 'package:aMazes/Globals/DataTypes.dart';
 
 class MazeGen {
-  //2 dimensional grid of object Block
+  //2-dimensional grid of Block object
   List<List<Block>> maze = [];
-  //queue to store previously visited since stack data structure is not available
+  //queue to store previously visited since stack are unavailable in dart
   Queue<Coordinates> visited = Queue<Coordinates>();
   //size of maze to be generated
   int size;
 
   //maze generation method
   List<List<Block>> generate(int s) {
-    //save maze size for future usage outside the method
+    //save maze size for usage outside the method
     this.size = s;
     //nested loops to initialise entire grid with a new instance of Block
     for (int i = 0; i < size; i++) {
@@ -83,9 +83,9 @@ class MazeGen {
       unvisited nodes exists
       +======================================================================+
       |   1. shuffle the list of unvisited nodes and pick the top element    |
-      |   2. increment/decrement the coordinates accordingly
-          3. add the node to the "stack"
-      |   3. run algo with the new coordinates                               |
+      |   2. increment/decrement the coordinates accordingly                 |
+      |   3. push the node to the "stack"                                    |
+      |   4. run algo with the new coordinates                               |
       +======================================================================+
        */
       randomizer.shuffle(Random());
