@@ -155,6 +155,7 @@ class LBOptionsState extends State<SelectLeaderboard>
                               .collection("Leaderboard")
                               .add(newMap)
                               .then((documentReference) {
+                                print(documentReference.documentID);
                             //store the boardID for auto-login on next viewing
                             prefs.setString(
                                 "onlineBoardID", documentReference.documentID);
