@@ -76,6 +76,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_icons:
-  image_path: "assets/AppIcon.png"
+  image_path: "assets/NewIcon.png"
   android: true
   ios: true
